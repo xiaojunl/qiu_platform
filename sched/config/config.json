@@ -1,0 +1,7 @@
+{
+  "qi": {
+    "host": "localhost",
+    "basePath": "/api/sched"
+  },
+  "apiKey": ""
+}

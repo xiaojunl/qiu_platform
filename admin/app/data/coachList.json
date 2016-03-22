@@ -1,0 +1,129 @@
+{
+  "data": [
+    {
+      "_id": 1,
+      "_clubId": {
+        "_id": 0,
+        "name": "string",
+        "contactName": "string",
+        "mobile": "string",
+        "telephone": "string",
+        "address": "string",
+        "loc": [
+          0
+        ],
+        "imgUrls": [
+          "string"
+        ],
+        "beginTime": "string",
+        "endTime": "string",
+        "weekBeginTime": "string",
+        "weekEndTime": "string",
+        "trafficRoute": "string",
+        "flags": [
+          "string"
+        ],
+        "scheduleFlg": 0,
+        "refundFlg": 0,
+        "introduce": "string",
+        "coachCount": 0,
+        "createTime": 0,
+        "deleteFlg": 0
+      },
+      "name": "张三教练",
+      "sex": 0,
+      "level": "国家一级",
+      "age": 4,
+      "imgUrl": "string",
+      "introduce": "张三是金牌教练",
+      "comments": [
+        {
+          "_userId": {
+            "_id": 0,
+            "username": "string",
+            "password": "string",
+            "type": 0,
+            "_venueId": {
+              "_id": 0,
+              "name": "string",
+              "contactName": "string",
+              "mobile": "string",
+              "telephone": "string",
+              "address": "string",
+              "loc": [
+                0
+              ],
+              "props": [
+                0
+              ],
+              "imgUrls": [
+                "string"
+              ],
+              "beginTime": "string",
+              "endTime": "string",
+              "weekBeginTime": "string",
+              "weekEndTime": "string",
+              "lightChargeFlg": 0,
+              "trafficRoute": "string",
+              "flags": [
+                "string"
+              ],
+              "scheduleFlg": 0,
+              "refundFlg": 0,
+              "introduce": "string",
+              "comments": [
+                {}
+              ],
+              "placeCount": 0,
+              "createTime": 0,
+              "deleteFlg": 0
+            },
+            "_clubId": {
+              "_id": 0,
+              "name": "string",
+              "contactName": "string",
+              "mobile": "string",
+              "telephone": "string",
+              "address": "string",
+              "loc": [
+                0
+              ],
+              "imgUrls": [
+                "string"
+              ],
+              "beginTime": "string",
+              "endTime": "string",
+              "weekBeginTime": "string",
+              "weekEndTime": "string",
+              "trafficRoute": "string",
+              "flags": [
+                "string"
+              ],
+              "scheduleFlg": 0,
+              "refundFlg": 0,
+              "introduce": "string",
+              "coachCount": 0,
+              "createTime": 0,
+              "deleteFlg": 0
+            }
+          },
+          "env": 0,
+          "serve": 0,
+          "profess": 0,
+          "communication": 0,
+          "comm": "string"
+        }
+      ],
+      "price": 50,
+      "weekPrice": 0,
+      "spacePriceFlg": 0,
+      "manCount": "5",
+      "priceTotal": 423,
+      "deleteFlg": "0"
+    }
+  ],
+  "paging": {
+    "pageCount": 1,
+    "itemCount": 1
+  }
+}

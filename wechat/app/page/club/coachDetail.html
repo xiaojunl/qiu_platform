@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>教练详情</title>
+</head>
+
+<body>
+<div class="sub_head"><a href="#coachList/{{coachDetail._clubId._id}}" class="fl"><img src="images/icon6.png" /></a><span>教练详情</span><a href="index.html" class="fr"><img src="images/icon5.png" /></a></div>
+<div class="conter">
+  <div class="coach">
+<a href="javascript:void()" class="list">
+  <div class="img"><img src="{{imgServerPath+coachDetail.imgUrl}}" /></div>
+  <div class="text zjlb4_text">
+    <span>{{coachDetail.name}}<em>{{coachDetail.level}}运动员</em></span>
+    <i>收费标准：{{coachDetail.price}}元/课时</i>
+    <p>教龄:<b>{{coachDetail.age}}年</b>沟通:<b>{{coachDetail.communicationAvg}}</b>专业:<b>{{coachDetail.professAvg}}</b></p>
+    
+   </div>
+  </a>
+</div>
+  <div id="wrapper" class="time_tab zjlb4">
+    <ul class="scroll">
+        <li ng-repeat="dayWeek in dayWeekArray" on-finish-render-filters ng-click="getPlacePriceByDay(dayWeek.ymd)"><em>{{dayWeek.week}}</em>{{dayWeek.md}}</li>
+    </ul>
+  </div>
+    <div class="time_cont">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="book-t">
+  <tr>
+    <td class="nobr">上午</td>
+      <td ng-repeat="timeValue in morningRange" ng-init="timeReservStatus=getTimeReservStatus(timeValue)" ng-class="getTimeTdClass(timeReservStatus)" ng-click="totalByTdClick(timeReservStatus,timeValue)">
+          <div ng-show="timeReservStatus!=4">{{timeValue}}</div>
+          <div ng-show="timeReservStatus==4">已预订</div>
+      </td>
+  </tr>
+  <tr>
+    <td class="nobr">下午</td>
+      <td ng-repeat="timeValue in afternoonRange" ng-init="timeReservStatus=getTimeReservStatus(timeValue)" ng-class="getTimeTdClass(timeReservStatus)"  ng-click="totalByTdClick(timeReservStatus,timeValue)">
+          <div ng-show="timeReservStatus!=4">{{timeValue}}</div>
+          <div ng-show="timeReservStatus==4">已预订</div>
+      </td>
+  </tr>
+  <tr>
+    <td class="nobr">晚上</td>
+      <td ng-repeat="timeValue in eveningRange" ng-init="timeReservStatus=getTimeReservStatus(timeValue)" ng-class="getTimeTdClass(timeReservStatus)" ng-click="totalByTdClick(timeReservStatus,timeValue)">
+          <div ng-show="timeReservStatus!=4">{{timeValue}}</div>
+          <div ng-show="timeReservStatus==4">已预订</div>
+      </td>
+  </tr>
+</table>
+</div>
+<div class="jl_jj"><h3><span class="current"><em>教练简介</em></span><span><em>客户评价</em></span></h3><div class="jl_tab"><p>{{coachDetail.introduce}}</p></div><div class="jl_tab" style="display:none;">
+    <dl ng-repeat="comment in coachDetail.comments"><dt><img src="{{imgServerPath+comment._userId.imgUrl}}" /><span>{{comment._userId.username }}<em>{{comment.time|longDateTimeRender}}</em></span></dt><dd>{{comment.comm}}</dd></dl>
+</div></div>
+</div>
+<div class="Price"><span>已约<em>{{timesCount}}</em>课时，共<em>￥{{timesPriceTotal}}</em>元</span>
+    <p ng-show="coachDetail._clubId.scheduleFlg==1"><a href="javascript:;" ng-click="submitOrder()">提交订单</a></p>
+    <p class="no" ng-show="coachDetail._clubId.scheduleFlg==0">提交订单</p>
+</div>
+
+</body>
+</html>

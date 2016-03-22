@@ -1,0 +1,74 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        新媒体基础数据
+        <small>维护标签信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#publicTagList">新媒体基础数据</a></li>
+        <li class="active">自定义标签</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">标签信息列表</h3>
+            <div class="box-tools">
+                <div class="input-group pull-left">
+                    <select class="form-control" ng-model="typeId" ng-options="x.id as x.name for x in typeOptions" ng-change="typeChange($event)"/>
+                </div>
+                <div class="input-group pull-left">
+                    <input type="text" class="form-control input-sm" ng-model="searchField" placeholder="标签名称" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default" ng-click="reload()"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <a href="#savePublicTag/4/-1" class="btn btn-default btn-sm"  data-toggle="modal">
+                        <i class="fa fa-plus-circle"></i> 新增
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>标签名称</th>
+                    <th>类型</th>
+                    <th>粉丝</th>
+                    <th>状态</th>
+                    <th>推荐关注</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="public in datas">
+                    <td>{{public.name}}</td>
+                    <td>{{public.type|publicMediaTypeTag}}</td>
+                    <td>{{public.fansCount}}</td>
+                    <td>{{public.enableStatus|renderFlag}}</td>
+                    <td>{{public.recommend}}</td>
+                    <td>
+                        <a href="#savePublicTag/4/{{public.id}}" id="updateBtn" title="编辑" ng-show="public.type==4"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:;" title="删除" data-toggle="modal" ng-click="deleteMediaPublic($index)" ng-show="public.type==4"><i class="fa fa-remove"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <p class="pull-left">
+                共<span>{{itemCount}}</span>条记录，
+                当前是第<span>{{currentPage}}/{{pageCount}}</span>页
+            </p>
+            <ul id="pagination"></ul>
+        </div>
+    </div>
+
+
+
+</section>

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>账号管理</title>
+</head>
+
+<body>
+<div class="sub_head"><a href="javascript:history.go(-1)" class="fl"><img src="images/icon6.png" /></a><span>帐号管理</span><a href="index.html" class="fr"><img src="images/icon5.png" /></a></div>
+<div class="account">
+  <dl>
+    <dt><img src="{{imgServerPath+user.imgUrl}}" /></dt>
+    <dd>{{user.mobile}}</dd>
+  </dl>
+  <ul>
+    <li>
+      <p>称呼</p>
+      <span>{{user.nick}}</span></li>
+      <li>
+      <p>性别</p>
+      <span>{{user.sex|sexFlag}}</span></li>
+   <!-- <li>
+      <p>登录密码</p>
+      <span>修改密码</span></li>-->
+    <li>
+      <p>我的运动豆</p>
+      <span class="nobg">{{user.sportBeans}}</span>
+      
+      </li>
+    
+  </ul>
+</div>
+</body>
+</html>

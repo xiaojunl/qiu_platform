@@ -1,0 +1,276 @@
+<section class="content-header">
+    <h1>
+        场馆资料
+        <small>查看及修改场馆资料信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#venueSetting">系统设置</a></li>
+        <li class="active">场馆资料</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <form novalidate name="saveVenueForm" ng-submit="saveVenue(saveVenueForm.$valid)">
+        <div class="box">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="hidden" name="_id" ng-model="_id"/>
+                            <label>场馆名称</label>
+                            <input type="text" class="form-control" name="name" ng-model="name" required/>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.name.$dirty) &&saveVenueForm.name.$error.required">场馆名称不能为空！</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>联系人</label>
+                            <input type="text" class="form-control" name="contactName" ng-model="contactName" required/>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.contactName.$dirty) &&saveVenueForm.contactName.$error.required">联系人不能为空！</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>联系人手机</label>
+                            <input type="text" id="mobile" name="mobile" ng-model="mobile" class="form-control" required/>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.mobile.$dirty) &&saveVenueForm.mobile.$error.required">手机号码不能为空！</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>场馆座机</label>
+                            <input type="text" class="form-control" name="telephone" ng-model="telephone"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>工作日营业时间</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" class="form-control" name="beginTime" ng-model="beginTime" readonly required>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.beginTime.$dirty) &&saveVenueForm.beginTime.$error.required">开始时间不能为空！</div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" class="form-control" name="endTime" ng-model="endTime" readonly required>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.endTime.$dirty) &&saveVenueForm.endTime.$error.required">结束时间不能为空！</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>节假日营业时间</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" class="form-control" name="weekBeginTime" ng-model="weekBeginTime" readonly required>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.weekBeginTime.$dirty) &&saveVenueForm.weekBeginTime.$error.required">开始时间不能为空！</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" class="form-control" name="weekEndTime" ng-model="weekEndTime" readonly required>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.weekEndTime.$dirty) &&saveVenueForm.weekEndTime.$error.required">结束时间不能为空！</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>场馆地址</label>
+                            <select class="form-control" id="cmbProvince" name="cmbProvince"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <select class="form-control" id="cmbCity" name="cmbCity"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <select class="form-control" id="cmbArea" name="cmbArea"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="text" class="form-control" placeholder="请输入详细街道地址,请勿重复填写省市区信息" name="street" ng-model="street" required/>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.street.$dirty) &&saveVenueForm.street.$error.required">详细地址不能为空！</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>是否支持预定</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="scheduleFlg" ng-model="scheduleFlg" value="0">
+                                    <span class="label label-success">否</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="scheduleFlg" ng-model="scheduleFlg" value="1">
+                                    <span class="label label-danger">是</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>是否支持退款</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="refundFlg" ng-model="refundFlg" value="0">
+                                    <span class="label label-success">否</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="refundFlg" ng-model="refundFlg" value="1">
+                                    <span class="label label-danger">是</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>是否开灯收费</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="lightChargeFlg" ng-model="lightChargeFlg" value="0">
+                                    <span class="label label-success">否</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="lightChargeFlg" ng-model="lightChargeFlg" value="1">
+                                    <span class="label label-danger">是</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>场馆标签</label>
+                            <div class="checkbox" id="tagDiv">
+                                <label class="no-padding" ng-repeat="flag in flagsArray">
+										        <span class="label label-default">
+										        	{{flag}} <a href="javascript:;" class="tag-del" ng-click="delTag($index)"><i class="fa fa-remove"></i></a>
+										        </span>
+                                </label>
+                                <label class="no-padding">
+										        <span class="label label-default">
+										        	<a href="javascript:;" ng-click="showAddTagForm()">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+										        </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>场馆属性</label>
+                            <div class="checkbox">
+                                <label ng-repeat="prop in propsOptions">
+                                    <input type="checkbox" name="{{prop.name}}" value="{{prop.id}}" ng-checked="isSelected(prop.id)" ng-click="updateSelection($event,prop.id)">
+                                    <span class="label label-default">{{prop.text}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>场馆图片(至少提供一张图片,最多可上传5张图片)</label>
+                            <input type="file" ng-file-select="onFileSelects($files)" multiple/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row img-preview">
+                            <div class="col-md-2" ng-repeat="imgurl in imgUrls">
+                                <img src="{{imgServerPath+imgurl}}" class="img-responsive" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>交通路线</label>
+                            <textarea class="form-control" rows="4"  name="trafficRoute" ng-model="trafficRoute" required></textarea>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.trafficRoute.$dirty) &&saveVenueForm.trafficRoute.$error.required">交通路线不能为空！</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>场馆简介</label>
+                            <textarea class="form-control" name="introduce" ng-model="introduce" rows="4" placeholder="请输入100字以内 ..." required ng-maxlength="100"></textarea>
+                            <div class="help-block help-block-error" ng-show="(submitted||saveVenueForm.introduce.$dirty) &&saveVenueForm.introduce.$invalid">场馆介绍不能为空,并且最多100字！</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </form>
+</section>
+<!-- /Main content -->
+
+<!-- Modals -->
+<div class="modal fade" id="tagModal">
+    <div class="modal-dialog">
+        <form name="addTagForm" novalidate ng-submit="addTag(addTagForm.$valid)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">添加标签</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>标签名称</label>
+                            <input type="text" class="form-control" id="tagName" name="tagName" ng-model="tagName" required/>
+                            <div class="help-block help-block-error" ng-show="addTagForm.tagName.$error.required">标签名不能为空！</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary" id="tagBtn">保存</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<!-- /Modals -->

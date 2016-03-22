@@ -1,0 +1,191 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        场地管理
+        <small>添加以及查看场地信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#spaceList">场地管理</a></li>
+        <li class="active">场地信息</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">场地信息列表</h3>
+            <div class="box-tools">
+                <div class="input-group pull-left">
+                    <input type="text" class="form-control input-sm" ng-model="searchField" placeholder="场地名称" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default" ng-click="reload()"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <a href="javascript:;" class="btn btn-default btn-sm"  data-toggle="modal" ng-click="showAddModalSpace()">
+                        <i class="fa fa-plus-circle"></i> 新增
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="check-all" />
+                        </label>
+                    </th>
+                    <th>场地名称</th>
+                    <th>工作日价格(元)</th>
+                    <th>节假日价格(元)</th>
+                    <th>服务人次</th>
+                    <th>成交金额(元)</th>
+                    <th>启用状态</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="space in datas">
+                    <td>
+                        <label>
+                            <input type="checkbox" name="spaceId" ng-value="spaceId._id" />
+                        </label>
+                    </td>
+                    <td>{{space.name}}</td>
+                    <td>{{space.price}}</td>
+                    <td>{{space.weekPrice}}</td>
+                    <td>{{space.manCount}}</td>
+                    <td>{{space.priceTotal}}</td>
+                    <td>{{space.deleteFlg|renderFlag}}</td>
+                    <td>
+                        <a href="javascript:;" id="updateBtn" title="编辑" ng-click="showUpdateModalSpace($index)"><i class="fa fa-edit"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <p class="pull-left">
+                共<span>{{itemCount}}</span>条记录，
+                当前是第<span>{{currentPage}}/{{pageCount}}</span>页
+            </p>
+            <ul id="pagination"></ul>
+        </div>
+    </div>
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="addModalSpace">
+        <div class="modal-dialog">
+            <form novalidate name="addFormSpace" ng-submit="addSpace(addFormSpace.$valid)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">添加场地信息</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>场地名称</label>
+                                    <input type="text" name="name" ng-model="name" class="form-control" required />
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.name.$dirty) && addFormSpace.name.$error.required">场地名称不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select ng-model="deleteFlg" ng-options="x.id as x.name for x in deleteOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>工作日价格(元)</label>
+                                    <input type="text" id="price" name="price" ng-model="price" class="form-control" required priceformat/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.price.$dirty) &&addFormSpace.price.$invalid">价格必须为非负数,只能带两位小数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>节假日价格(元)</label>
+                                    <input type="text" name="weekPrice" ng-model="weekPrice" class="form-control" required priceformat/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.weekPrice.$dirty) &&addFormSpace.weekPrice.$invalid">价格必须为非负数,只能带两位小数！</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="updateModalSpace">
+        <div class="modal-dialog">
+            <form novalidate name="updateFormSpace" ng-submit="updateSpace(updateFormSpace.$valid)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">修改场地信息</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>场地名称</label>
+                                    <input type="text" name="venueName" ng-model="venue.name" class="form-control" required />
+                                    <div class="help-block help-block-error" ng-show="(submitted||updateFormSpace.venueName.$dirty) && updateFormSpace.venueName.$error.required">场地名称不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select ng-model="venue.deleteFlg" ng-options="x.id as x.name for x in deleteOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>工作日价格</label>
+                                    <input type="text" name="venuePrice"  ng-model="venue.price" class="form-control" required priceformat/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||updateFormSpace.venuePrice.$dirty) &&updateFormSpace.venuePrice.$invalid">价格必须为非负数,只能带两位小数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>节假日价格</label>
+                                    <input type="hidden"  ng-model="venue.id"/>
+                                    <input type="text" name="venueWeekPrice" ng-model="venue.weekPrice" class="form-control" required priceformat/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||updateFormSpace.venueWeekPrice.$dirty) &&updateFormSpace.venueWeekPrice.$invalid">价格必须为非负数,只能带两位小数！</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</section>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="clubApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>全网球管理平台</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/adminx.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/skins/_all-skins.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/msg.css" />
+    <link rel="stylesheet" type="text/css" href="plugins/datepicker/datepicker3.css" />
+    <link rel="stylesheet" type="text/css" href="plugins/clockpicker/bootstrap-clockpicker.min.css" />
+
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/common/constant.js"></script>
+    <script type="text/javascript" src="js/common/adminx.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="js/common/skin.js"></script>
+    <script type="text/javascript" src="js/common/filters.js"></script>
+    <script type="text/javascript" src="js/club/app.js"></script>
+    <script type="text/javascript" src="js/baseModule.js"></script>
+    <script type="text/javascript" src="js/common/commonController.js"></script>
+    <script type="text/javascript" src="js/club/controllers.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap-paginator.js"></script>
+    <script type="text/javascript" src="js/common/msg.js"></script>
+    <script type="text/javascript" src="js/common/directives.js"></script>
+        <script type="text/javascript" src="js/common/dateFormat.js"></script>
+        <script type="text/javascript" src="plugins/jsAddress/jsAddress.js"></script>
+        <script type="text/javascript" src="plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+        <script type="text/javascript" src="plugins/clockpicker/bootstrap-clockpicker.min.js"></script>
+        <script type="text/javascript" src="plugins/angular-file-upload.js"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=65a08681b5c1cc778155099888e9bebc"></script>
+</head>
+
+
+<body class="hold-transition fixed skin-blue-light sidebar-mini">
+<!-- Wrapper -->
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- logo -->
+        <a href="index.html" class="logo">
+		<span class="logo-mini">
+			<img src="img/logo-mini.png" alt="" />
+		</span>
+		<span class="logo-lg">
+			<img src="img/logo.png" alt="" />
+		</span>
+        </a>
+        <!-- /logo -->
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">切换导航栏</span>
+            </a>
+
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu" ng-controller="mainCtrl">
+                <ul class="nav navbar-nav">
+
+                    <li class="dropdown notifications-menu">
+                        <a href="#messageList" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">{{unReadMsgCount}}</span>
+                        </a>
+
+                    </li>
+
+                    <li class="dropdown tasks-menu">
+                        <a href="#orderList" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-flag-o"></i>
+                            <span class="label label-danger">0</span>
+                        </a>
+
+                    </li>
+
+                    <li class="dropdown user user-menu">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="img/user01.jpg" class="user-image" alt="" />
+                            <span class="hidden-xs">俱乐部管理员</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="img/user01.jpg" class="img-circle" alt="" />
+                                <p>
+                                    俱乐部管理员
+                                    <small>俱乐部信息维护,订单处理</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#clubSetting" class="btn btn-default btn-flat">俱乐部资料</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" ng-click="userLogout()" class="btn btn-default btn-flat">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <!-- /Header Navbar -->
+    </header>
+    <!-- /Main Header -->
+
+    <!-- Main Sidebar -->
+    <aside class="main-sidebar">
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">导航菜单</li>
+                <li class="treeview">
+                    <a href="#coachList">
+                        <i class="fa fa-book"></i>
+                        <span>教练管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#coachList"><i class="fa fa-circle-o"></i>教练信息</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#orderList">
+                        <i class="fa fa-book"></i>
+                        <span>订单管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#orderList"><i class="fa fa-circle-o"></i>订单查询</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#financialList">
+                        <i class="fa fa-book"></i>
+                        <span>财务管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#financialList"><i class="fa fa-circle-o"></i>财务查询</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#venueSetting">
+                        <i class="fa fa-user"></i>
+                        <span>系统设置</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#clubSetting"><i class="fa fa-circle-o"></i>俱乐部资料</a></li>
+                        <li><a href="#modifyPwd"><i class="fa fa-circle-o"></i>修改密码</a></li>
+                        <li><a href="#messageList"><i class="fa fa-circle-o"></i>消息中心</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </aside>
+    <!-- /Main Sidebar -->
+
+
+
+    <!-- Content Wrapper -->
+    <div ng-view class="content-wrapper">
+
+    </div>
+    <!-- /Content Wrapper -->
+
+
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            版本 V0.1
+        </div>
+        Copyright &copy; 2015 <a href="#" target="_blank">上海秒兔信息技术有限公司</a> 版权所有
+    </footer>
+    <!-- /Main Footer -->
+
+    <div class="control-sidebar-bg"></div>
+    <!-- /Control Sidebar -->
+</div>
+
+</body>
+</html>

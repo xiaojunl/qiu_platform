@@ -1,0 +1,8 @@
+.msg_warning_body{padding:30px}
+.msg_warning_icon{width:30px;height:35px;float:left;margin-right:10px;margin-top:5px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAjCAYAAACD1LrRAAAAAXNSR0IArs4c6QAAALpJREFUWAljfNca4vmfiXEWIwOjDAMdwH+G/08Y//1PY6GnpSB/gTz4n5FxJhO9fIocmIyMDLJMyAL0ZLOQY5lQ5SpGdH3v2sP+o4vh4w+Yj0ctxhctVJUbDWqqBic+w0aDGl/oUFVuNKipGpz4DBsNanyhQ1W50aCmanDiM4yR1LYSPsNIkRuwOB5tZZISTRSpHbA4HjCLR152Yvr/n+ExRamEDM0gO5kY//9LB/XSydBPlhbwiADQTgAZkSrt+QvASQAAAABJRU5ErkJggg==);background-position:0 0;background-repeat:no-repeat;}
+.msg_warning_text{font-weight:700;font-size:16px;margin-bottom:10px}
+
+.page_tips {min-width: 180px;height: 40px;padding-left: 10px;padding-right: 10px;position: fixed;top: 0;left: 0;right: 0;text-align: center;z-index: 9999;}
+.page_tips.success .inner {background: #4a90e2;}
+.page_tips.error .inner {background: #ee8756;}
+.page_tips .inner {padding: 0 30px; display: inline-block;font-size: 14px;border-radius: 0 0 4px 4px;color: #fff;height: 36px; line-height: 36px;}

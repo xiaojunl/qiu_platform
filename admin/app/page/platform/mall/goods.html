@@ -1,0 +1,279 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+    <!-- Content Header -->
+    <section class="content-header">
+        <h1>
+            商品管理
+            <small>查看维护商品信息</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="#goodsList">商城管理</a></li>
+            <li class="active">商品信息</li>
+        </ol>
+    </section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">添加/修改商品信息</h3>
+            <div class="box-tools">
+                <a href="javascript:history.go(-1)" class="btn btn-default btn-sm">
+                    <i class="fa fa-reply"></i> 返回
+                </a>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <form novalidate name="saveGoodsForm" ng-submit="saveGoods(saveGoodsForm.$valid)">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="hidden" name="_id" ng-model="_id"/>
+                                    <label>商品名称</label>
+                                    <input type="text" class="form-control" name="name" ng-model="name" required/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||saveGoodsForm.name.$dirty) &&saveGoodsForm.name.$error.required">商品名称不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>商品编号</label>
+                                    <input type="text" class="form-control" name="no" ng-model="no" required/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||saveGoodsForm.no.$dirty) &&saveGoodsForm.no.$error.required">商品编号不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>品牌</label>
+                                    <input type="text" id="mobile" name="brand" ng-model="brand" class="form-control" required/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||saveGoodsForm.brand.$dirty) &&saveGoodsForm.brand.$error.required">品牌不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>市场价</label>
+                                    <input type="text" class="form-control" name="price" ng-model="price" required priceformat/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||saveGoodsForm.price.$dirty) &&saveGoodsForm.price.$invalid">价格必须为非负数,只能带两位小数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select ng-model="deleteFlg" name="deleteFlg" ng-options="x.id as x.name for x in deleteOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||saveGoodsForm.deleteFlg.$dirty) &&saveGoodsForm.deleteFlg.$error.required">启用状态不能为空！</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="no-padding">
+                                        <span class="label label-default">
+                                            <a href="javascript:;" ng-click="showAddProperTagForm()">
+                                                <i class="fa fa-plus"></i>添加属性类型
+                                            </a>
+                                        </span>
+                                    </label>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <div class="row" ng-repeat="propType in product.mulitiProps">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>{{propType.prop}}</label> <a href="javascript:;" class="tag-del" ng-click="delProperTag($index)"><i class="fa fa-remove"></i></a>
+                                    <div class="checkbox">
+                                        <label class="no-padding" ng-repeat="propValue in propType.values">
+										        <span class="label label-default">
+										        	{{propValue}} <a href="javascript:;" class="tag-del" ng-click="delTag($parent.$index,$index)"><i class="fa fa-remove"></i></a>
+										        </span>
+                                        </label>
+                                        <label class="no-padding">
+										        <span class="label label-default">
+										        	<a href="javascript:;" ng-click="showAddTagForm($index)">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+										        </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>库存信息设置</label>
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th ng-repeat="propType in product.mulitiProps" ng-show="propType.values.length>0">{{propType.prop}}</th>
+                                            <th>库存</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        <tr ng-repeat="prop in product.combProps">
+                                            <td ng-repeat="propValue in prop.props">{{propValue.value}}</td>
+                                            <td>
+                                                <input type="number" ng-model="prop.inventory" class="form-control"/>
+                                            </td>
+                                            <td>
+                                                <label ng-show="prop.status==0">未上架</label>
+                                                <label ng-show="prop.status==1">已上架</label>
+                                            </td>
+                                            <td>
+                                                 <a href="javascript:;" ng-show="prop.status==0" ng-click="changeStatus($index,1)"><i class="fa fa-arrow-circle-up"></i> 上架</a>
+                                                 <a href="javascript:;" ng-show="prop.status==1"  ng-click="changeStatus($index,0)"><i class="fa fa-arrow-circle-down"></i> 下架</a>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>商品图片(至少提供一张图片,最多可上传5张图片)</label>
+                                    <input type="file" ng-file-select="onFileSelects($files)" multiple/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row img-preview">
+                                    <div class="col-md-2" ng-repeat="imgurl in imgUrls">
+                                        <img src="{{imgServerPath+imgurl}}" class="img-responsive" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>商品描述</label>
+                                    <!-- 加载富文本编辑器 UEditor -->
+                                    <script id="UEBannerContainer" name="content" type="text/plain"></script>
+                                    <script type="text/javascript">
+                                        UE.delEditor("UEBannerContainer");
+                                        //初始化编辑器
+                                        var ue = UE.getEditor('UEBannerContainer');
+
+                                        //定义插入图片命令
+                                        ue.commands['insertpic'] = {
+                                            execCommand: function() {
+                                                var that = this;
+                                                $("#uploadModal").modal({
+                                                    backdrop: false
+                                                });
+                                                return true;
+                                            }
+                                        };
+                                    </script>
+                                    <!-- /加载富文本编辑器 UEditor -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+        </div>
+</section>
+<!-- /Main content -->
+
+
+<!-- Modals -->
+<div class="modal fade" id="properTagModal">
+    <div class="modal-dialog">
+        <form name="addProperTagForm" novalidate ng-submit="addProperTag(addProperTagForm.$valid)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">添加属性类型</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>属性类型名称</label>
+                                <input type="text" class="form-control" name="properTagName" ng-model="properTagName" required/>
+                                <div class="help-block help-block-error" ng-show="addProperTagForm.properTagName.$error.required">属性类型名称不能为空！</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modals -->
+<div class="modal fade" id="tagModal">
+    <div class="modal-dialog">
+        <form name="addTagForm" novalidate ng-submit="addTag(addTagForm.$valid)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">添加属性值</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>属性值</label>
+                                <input type="text" class="form-control" name="tagName" ng-model="tagName" required/>
+                                <div class="help-block help-block-error" ng-show="addTagForm.tagName.$error.required">属性值不能为空！</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /Modals -->
+
+
+
+<!-- Modals -->
+<div class="modal fade" id="uploadModal">
+    <form novalidate name="picForm" ng-submit="uploadPicToServer(picForm.$valid)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">插入图片</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>选择图片</label>
+                                <input type="file" class="form-control" ng-file-select="onUploadPicSelect($files)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary" id="picBtn">确认</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /Modals -->

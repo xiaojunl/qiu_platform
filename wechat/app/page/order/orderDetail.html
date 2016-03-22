@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>我的订单</title>
+</head>
+
+<body>
+<div class="sub_head"><a href="javascript:history.go(-1)" class="fl"><img src="images/icon6.png" /></a><span>订单详情</span><a href="tel:{{serviceTelephone}}" class="fr"><img src="images/tel.png" /></a></div>
+
+<div class="Routine2"><h3><span class="current">订单状态</span><span>订单详情</span></h3>
+
+<div  class="jl_tab2" >
+<div class="ddzt">
+<ul>
+<li ng-repeat="orderStatus in orderDetail.status|orderBy:'-time'" ng-class="getStatusClass($index)">
+<span></span>
+    <div ng-show="orderStatus._id==5">
+        <b>{{orderStatus._id|orderStatusFlag}}({{orderStatus.reason}})</b>
+        <i>{{orderStatus.time|longDateTimeRender}}</i>
+    </div>
+    <div ng-show="orderStatus._id!=5">
+        <b>{{orderStatus._id|orderStatusFlag}}</b>
+        <i>{{orderStatus.time|longDateTimeRender}}</i>
+    </div>
+</li>
+</ul>
+</div>
+</div>
+<div class="jl_tab2" style="display:none;">
+<div class="order">
+  <ul>
+    <li><span>{{typeName}}</span>
+      <p>{{typeValue}}</p>
+    </li>
+    <li><span>预订日期</span>
+      <p>{{orderDetail.date}}</p>
+    </li>
+    <li><span ng-show="orderDetail.type==1">预订场地</span><span ng-show="orderDetail.type!=1">预订教练</span>
+      <p>
+          <b ng-repeat="orderTime in orderDetail.orderTimes"><i ng-repeat="time in orderTime.times">{{orderTime.name}}  {{time|timeRender}}<br></i></b>
+      </p>
+    </li>
+  </ul>
+  <ul>
+    <li><span>订单金额</span>
+      <p><em>￥{{orderDetail.price}}</em></p>
+    </li>
+    <li><span>运动豆抵用{{orderDetail.sportBeans}}个</span>
+      <p>抵用现金<em>￥{{orderDetail.sportBeans}}</em></p>
+    </li>
+    <li><span>实际付款</span>
+      <p><em>￥{{orderDetail.price}}</em></p>
+    </li>
+  </ul>
+  <div class="ddxq">
+  <h4>订单详情</h4>
+  <ul>
+    <li><span>订单编号</span>
+      <p>{{orderDetail._id}}</p>
+    </li>
+    <li><span>订单时间</span>
+      <p>{{orderDetail.createTime|longDateTimeRender}}</p>
+    </li>
+    <li><span>支付方式</span>
+      <p>{{orderDetail.payment|paymentRender}}</p>
+    </li>
+    <li><span>预约人</span>
+      <p>{{orderDetail._userId.nick}}</p>
+    </li>
+    <li><span>手机号码</span>
+      <p>{{orderDetail._userId.mobile}}</p>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+<div class="Price">
+    <p class="p2" ng-show="isCanPay==3">交易成功</p>
+    <p class="p2" ng-show="isCanPay==0"><a href="javascript:;" ng-click="toPaymentOrder()" >去付款</a></p>
+    <p class="p2" ng-show="isCanPay==1||isCanPay==2"><a href="javascript:;" ng-click="cancelOrder()">取消订单</a></p>
+    <p class="p2" ng-show="isCanPay!=0&&isCanPay!=1&&isCanPay!=2&&isCanPay!=3">{{isCanPay|orderStatusFlag}}</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="platformApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>全网球管理平台</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/adminx.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/skins/_all-skins.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/msg.css" />
+    <link rel="stylesheet" type="text/css" href="plugins/datepicker/datepicker3.css" />
+    <link rel="stylesheet" type="text/css" href="plugins/ueditor/themes/default/css/ueditor.css" />
+
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/common/constant.js"></script>
+    <script type="text/javascript" src="js/common/adminx.min.js"></script>
+    <script src="plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="js/common/skin.js"></script>
+    <script type="text/javascript" src="js/common/filters.js"></script>
+    <script type="text/javascript" src="js/platform/app.js"></script>
+    <script type="text/javascript" src="js/baseModule.js"></script>
+    <script type="text/javascript" src="js/baseMediaModule.js"></script>
+    <script type="text/javascript" src="js/common/commonController.js"></script>
+    <script type="text/javascript" src="js/platform/controllers.js"></script>
+    <script type="text/javascript" src="js/platform/mallController.js"></script>
+    <script type="text/javascript" src="js/platform/mediaController.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap-paginator.js"></script>
+    <script type="text/javascript" src="js/common/msg.js"></script>
+    <script type="text/javascript" src="js/common/directives.js"></script>
+        <script type="text/javascript" src="js/common/dateFormat.js"></script>
+        <script type="text/javascript" src="plugins/jsAddress/jsAddress.js"></script>
+        <script type="text/javascript" src="plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="plugins/angular-file-upload.js"></script>
+    <script type="text/javascript" src="plugins/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="plugins/ueditor/ueditor.all.js"></script>
+    <script src="plugins/underscore-min.js"></script>
+    <script src="plugins/select2/select2.full.min.js"></script>
+    <script type="text/javascript" src="http://player.youku.com/jsapi"></script>
+</head>
+
+
+<body class="hold-transition fixed skin-blue-light sidebar-mini">
+<!-- Wrapper -->
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- logo -->
+        <a href="index.html" class="logo">
+		<span class="logo-mini">
+			<img src="img/logo-mini.png" alt="" />
+		</span>
+		<span class="logo-lg">
+			<img src="img/logo.png" alt="" />
+		</span>
+        </a>
+        <!-- /logo -->
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">切换导航栏</span>
+            </a>
+
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu" ng-controller="mainCtrl">
+                <ul class="nav navbar-nav">
+
+                    <li class="dropdown user user-menu">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="img/user01.jpg" class="user-image" alt="" />
+                            <span class="hidden-xs">系统管理员</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="img/user01.jpg" class="img-circle" alt="" />
+                                <p>
+                                    系统管理员
+                                    <small>对平台所有功能管理的超级管理员</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">账号管理</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" ng-click="userLogout()" class="btn btn-default btn-flat">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+        <!-- /Header Navbar -->
+    </header>
+    <!-- /Main Header -->
+
+    <!-- Main Sidebar -->
+    <aside class="main-sidebar">
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">导航菜单</li>
+                <li class="treeview">
+                    <a href="#userCnts">
+                        <i class="fa fa-book"></i>
+                        <span>会员管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#userCnts"><i class="fa fa-circle-o"></i>用户管理</a></li>
+                        <li><a href="#venueList"><i class="fa fa-circle-o"></i>场馆会员</a></li>
+                        <li><a href="#clubList"><i class="fa fa-circle-o"></i>俱乐部会员</a></li>
+                    </ul>
+                </li>
+                    <li class="treeview">
+                            <a href="#orderList/1">
+                                    <i class="fa fa-book"></i>
+                                    <span>订单管理</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                    <li><a href="#orderList/1"><i class="fa fa-circle-o"></i>场馆订单</a></li>
+                                    <li><a href="#orderList/2"><i class="fa fa-circle-o"></i>俱乐部订单</a></li>
+                            </ul>
+                    </li>
+                    <li class="treeview">
+                            <a href="#financialList/1">
+                                    <i class="fa fa-book"></i>
+                                    <span>财务管理</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                    <li><a href="#financialList/1"><i class="fa fa-circle-o"></i>场馆财务</a></li>
+                                    <li><a href="#financialList/2"><i class="fa fa-circle-o"></i>俱乐部财务</a></li>
+                                    <li><a href="#mallFinancial/3"><i class="fa fa-circle-o"></i>商城财务</a></li>
+                            </ul>
+                    </li>
+                <li class="treeview">
+                    <a href="#arrangeList">
+                        <i class="fa fa-book"></i>
+                        <span>同城约战</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#arrangeList"><i class="fa fa-circle-o"></i>约战信息</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#goodsList">
+                        <i class="fa fa-book"></i>
+                        <span>商城管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#goodsList"><i class="fa fa-circle-o"></i>商品管理</a></li>
+                        <li><a href="#activityList"><i class="fa fa-circle-o"></i>活动管理</a></li>
+                        <li><a href="#goodsOrderList"><i class="fa fa-circle-o"></i>订单管理</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#publicTagList">
+                        <i class="fa fa-user"></i>
+                        <span>新媒体基础数据</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#publicTagList"><i class="fa fa-circle-o"></i>自定义标签</a></li>
+                        <li><a href="#publicGameList"><i class="fa fa-circle-o"></i>赛事管理</a></li>
+                        <li><a href="#publicPlayerList"><i class="fa fa-circle-o"></i>球星管理</a></li>
+                        <li><a href="#publicSpecialList"><i class="fa fa-circle-o"></i>专题管理</a></li>
+                        <li><a href="#mediaBackGround"><i class="fa fa-circle-o"></i>背景图管理</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#newstypeList">
+                        <i class="fa fa-user"></i>
+                        <span>新媒体信息发布</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#newstypeList"><i class="fa fa-circle-o"></i>新闻分类</a></li>
+                        <li><a href="#mediaNewsList"><i class="fa fa-circle-o"></i>新闻管理</a></li>
+                        <li><a href="#videotypeList"><i class="fa fa-circle-o"></i>视频分类</a></li>
+                        <li><a href="#mediaVideoList"><i class="fa fa-circle-o"></i>视频管理</a></li>
+                        <li><a href="#rankingWay"><i class="fa fa-circle-o"></i>球星排名分类</a></li>
+                        <li><a href="#rankingPhase"><i class="fa fa-circle-o"></i>历史排名维护</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#keyWorldList">
+                        <i class="fa fa-user"></i>
+                        <span>新媒体网球圈</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#keyWorldList"><i class="fa fa-circle-o"></i>关键词维护</a></li>
+                        <li><a href="#mediaStat"><i class="fa fa-circle-o"></i>运营统计</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#sysMessageList">
+                        <i class="fa fa-user"></i>
+                        <span>系统设置</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#sysMessageList"><i class="fa fa-circle-o"></i>消息群发</a></li>
+                        <li><a href="#bannerList"><i class="fa fa-circle-o"></i>BANNER管理</a></li>
+                        <li><a href="#pageConfigList"><i class="fa fa-circle-o"></i>单页管理</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </aside>
+    <!-- /Main Sidebar -->
+
+
+
+    <!-- Content Wrapper -->
+    <div ng-view class="content-wrapper">
+
+    </div>
+    <!-- /Content Wrapper -->
+
+
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            版本 V0.1
+        </div>
+        Copyright &copy; 2015 <a href="#" target="_blank">上海秒兔信息技术有限公司</a> 版权所有
+    </footer>
+    <!-- /Main Footer -->
+
+    <div class="control-sidebar-bg"></div>
+    <!-- /Control Sidebar -->
+</div>
+
+</body>
+</html>

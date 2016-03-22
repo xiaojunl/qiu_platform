@@ -1,0 +1,246 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        球星管理
+        <small>维护球星信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#publicTagList">新媒体基础数据</a></li>
+        <li class="active">球星管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">添加/修改球星信息</h3>
+            <div class="box-tools">
+                <a href="javascript:history.go(-1)" class="btn btn-default btn-sm">
+                    <i class="fa fa-reply"></i> 返回
+                </a>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <form novalidate name="addFormSpace" ng-submit="saveMediaPublic(addFormSpace.$valid)">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="no-padding">
+                                        <span class="label label-default">
+                                            基础信息
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="hidden"  ng-model="public.id"/>
+                                    <label>姓名</label>
+                                    <input type="text" name="name" ng-model="public.name" class="form-control" required />
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.name.$dirty) && addFormSpace.name.$error.required">姓名不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>国籍</label>
+                                    <select class="form-control select2" id="selCountry" name="country" ng-model="public.country" required>
+                                        <optgroup label="{{countryGroup.groupName}}" ng-repeat="countryGroup in countryOptions">
+                                            <option ng-repeat="countryData in countryGroup.dataList">{{countryData}}</option>
+                                        </optgroup>
+                                    </select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.country.$dirty) && addFormSpace.country.$error.required">国籍不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select name="sex" ng-model="public.sex" ng-options="x.id as x.name for x in sexOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.sex.$dirty) && addFormSpace.sex.$error.required">性别不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>生日</label>
+                                    <input type="text" name="birthday" ng-model="public.birthday" class="form-control dpicker" required/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.birthday.$dirty) && addFormSpace.birthday.$error.required">生日不能为空！</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select name="enableStatus" ng-model="public.enableStatus" ng-options="x.id as x.name for x in deleteOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.enableStatus.$dirty) && addFormSpace.enableStatus.$error.required">启用状态不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>排序号</label>
+                                    <input type="text" name="sortNum" ng-model="public.sortNum" class="form-control" required positiveinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.sortNum.$dirty) &&addFormSpace.sortNum.$invalid">排序号必须为正整数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>是否推荐关注</label>
+                                    <select name="recommend" ng-model="public.recommend" ng-options="x.id as x.name for x in isFlagOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.recommend.$dirty) &&addFormSpace.recommend.$invalid">不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>是否职业运动员</label>
+                                    <select name="major" ng-model="public.major" ng-options="x.id as x.name for x in isFlagOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.major.$dirty) &&addFormSpace.major.$invalid">不能为空！</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>简介</label>
+                                    <input type="text" name="intro" ng-model="public.intro" class="form-control" required ng-maxlength="20"/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.intro.$dirty) &&addFormSpace.intro.$invalid">请输入20字以内简介！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>头像</label>
+                                    <input type="file" name="logoUrl" ng-model="public.logoUrl" ng-file-select="onImgSelect($files)" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" ng-show="public.logoUrl!=''">
+                                    <img src="{{imgServerPath+public.logoUrl}}" class="img-responsive" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="no-padding">
+                                        <span class="label label-default">
+                                            积分信息
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>单打积分</label>
+                                    <input type="text" name="singlesIntegral" ng-model="public.singlesIntegral" class="form-control" required nonnegativeinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.singlesIntegral.$dirty) &&addFormSpace.singlesIntegral.$invalid">单打积分必须为非负整数,没有则填0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>单打参数数量</label>
+                                    <input type="text" name="singlesNum" ng-model="public.singlesNum" class="form-control" required nonnegativeinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.singlesNum.$dirty) &&addFormSpace.singlesNum.$invalid">单打参数数量必须为非负整数,没有则填0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>双打积分</label>
+                                    <input type="text" name="doublesIntegral" ng-model="public.doublesIntegral" class="form-control" required nonnegativeinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.doublesIntegral.$dirty) &&addFormSpace.doublesIntegral.$invalid">双打积分必须为非负整数,没有则填0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>双打参数数量</label>
+                                    <input type="text" name="doublesNum" ng-model="public.doublesNum" class="form-control" required nonnegativeinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.doublesNum.$dirty) &&addFormSpace.doublesNum.$invalid">双打参数数量必须为非负整数,没有则填0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="no-padding">
+                                        <span class="label label-default">
+                                            球星介绍
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <!-- 加载富文本编辑器 UEditor -->
+                                    <script id="UERemarkContainer" name="content" type="text/plain"></script>
+                                    <script type="text/javascript">
+                                        UE.delEditor("UERemarkContainer");
+                                        //初始化编辑器
+                                        var ue = UE.getEditor('UERemarkContainer');
+
+                                        //定义插入图片命令
+                                        ue.commands['insertpic'] = {
+                                            execCommand: function() {
+                                                var that = this;
+                                                $("#uploadModal").modal({
+                                                    backdrop: false
+                                                });
+                                                return true;
+                                            }
+                                        };
+
+                                    </script>
+                                    <!-- /加载富文本编辑器 UEditor -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+<!-- /Main content -->
+
+
+
+<!-- Modals -->
+<div class="modal fade" id="uploadModal">
+    <form novalidate name="picForm" ng-submit="uploadPicToServer(picForm.$valid)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">插入图片</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>选择图片</label>
+                                <input type="file" class="form-control" ng-file-select="onUploadPicSelect($files)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary" id="picBtn">确认</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /Modals -->

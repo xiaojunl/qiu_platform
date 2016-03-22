@@ -1,0 +1,27 @@
+{
+  "name": "sched",
+  "description": "",
+  "version": "0.1.0",
+  "author": "jungle <lxj_hmxc@126.com>",
+  "contributors": [],
+  "engines": {
+    "node": "~0.10.22"
+  },
+  "dependencies": {
+    "express": "^4.0.0",
+    "later": "^1.1.10"
+  },
+  "devDependencies": {
+    "tape": "^3.0.0",
+    "jshint": "^2.4.1",
+    "istanbul": "~0.2.3",
+    "enjoi": "~0.1.16",
+    "supertest": "~0.13.0"
+  },
+  "scripts": {
+    "test": "tape tests/*.js",
+    "cover": "istanbul cover tape -- tests/*.js",
+    "lint": "jshint -c .jshintrc index.js handlers models"
+  },
+  "main": "./server"
+}

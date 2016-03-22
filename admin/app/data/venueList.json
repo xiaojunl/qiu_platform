@@ -1,0 +1,58 @@
+{
+  "data": [
+    {
+      "_id": 0,
+      "username": "zs",
+      "password": "string",
+      "type": 0,
+      "_venueId": {
+        "_id": 0,
+        "name": "黄浦区羽毛球馆",
+        "contactName": "张三",
+        "mobile": "1345678",
+        "telephone": "string",
+        "address": "string",
+        "loc": [
+          0
+        ],
+        "props": [
+          0
+        ],
+        "imgUrls": [
+          "string"
+        ],
+        "beginTime": "string",
+        "endTime": "string",
+        "weekBeginTime": "string",
+        "weekEndTime": "string",
+        "lightChargeFlg": 0,
+        "trafficRoute": "string",
+        "flags": [
+          {
+            "_id": 0,
+            "flag": "string"
+          }
+        ],
+        "scheduleFlg": 0,
+        "refundFlg": 0,
+        "introduce": "string",
+        "comments": [
+          {
+            "_userId": {},
+            "env": 0,
+            "serve": 0,
+            "comm": "string"
+          }
+        ],
+        "placeCount": 0,
+        "createTime": 0,
+        "modifyTime": 0,
+        "deleteFlg": 0
+      }
+    }
+  ],
+  "paging": {
+    "pageCount": 5,
+    "itemCount": 100
+  }
+}

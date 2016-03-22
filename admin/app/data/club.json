@@ -1,0 +1,33 @@
+{
+  "_id": 0,
+  "name": "张三",
+  "contactName": "张三经纪人",
+  "mobile": "13764892915",
+  "telephone": "0215364783",
+  "address": {
+    "province": "上海",
+    "city": "市辖区",
+    "area": "黄浦区",
+    "street": "西藏南路24号"
+  },
+  "loc": [
+    0
+  ],
+  "imgUrls": [
+    "string"
+  ],
+  "beginTime": "10:00",
+  "endTime": "18:00",
+  "weekBeginTime": "9:00",
+  "weekEndTime": "20:00",
+  "trafficRoute": "无",
+  "flags": [
+    "金牌教练","500强"
+  ],
+  "scheduleFlg": 0,
+  "refundFlg": 0,
+  "introduce": "教练最多最好的俱乐部",
+  "coachCount": 0,
+  "createTime": 0,
+  "deleteFlg": 0
+}

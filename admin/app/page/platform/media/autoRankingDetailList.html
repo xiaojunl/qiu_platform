@@ -1,0 +1,67 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        新媒体信息发布
+        <small>球星排名信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#newstypeList">新媒体信息发布</a></li>
+        <li class="active">历史排名维护</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">球员自动排名信息</h3>
+            <div class="box-tools">
+                <a href="javascript:history.go(-1)" class="btn btn-default btn-sm">
+                    <i class="fa fa-reply"></i> 返回
+                </a>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>排名名次</th>
+                    <th>球员名称</th>
+                    <th>期数</th>
+                    <th>积分</th>
+                    <th>参数数量</th>
+                    <th>上次排名</th>
+                    <th>排名变化</th>
+                </tr>
+                <tr ng-repeat="detail in datas">
+                    <td>{{detail.ranking}}</td>
+                    <td>{{detail.player.name}}</td>
+                    <td>{{detail.num}}</td>
+                    <td>{{detail.integral}}</td>
+                    <td>{{detail.entrieNum}}</td>
+                    <td>
+                        <label ng-show="detail.preRanking==-1">- - - - </label>
+                        <label ng-show="detail.preRanking>-1">{{detail.preRanking}}</label>
+                    <td>
+                        <i ng-show="detail.ranking<detail.preRanking||detail.preRanking==-1" class="fa fa-long-arrow-up">上升</i>
+                        <i ng-show="detail.ranking==detail.preRanking" class="fa fa-long-arrow-right">不变</i>
+                        <i ng-show="detail.ranking>detail.preRanking&&detail.preRanking!=-1" class="fa fa-long-arrow-down">下降</i>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <p class="pull-left">
+                共<span>{{itemCount}}</span>条记录，
+                当前是第<span>{{currentPage}}/{{pageCount}}</span>页
+            </p>
+            <ul id="pagination"></ul>
+        </div>
+    </div>
+
+
+</section>

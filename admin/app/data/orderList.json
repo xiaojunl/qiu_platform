@@ -1,0 +1,51 @@
+{
+  "data": [
+    {
+      "_id":1,
+      "userNum": "u1001",
+      "spaceName": "1号场地",
+      "createTime": 1443274629189,
+      "date":"2015-07-09",
+      "price": "50",
+      "time": "2015-07-09",
+      "orderStatus": "1",
+      "orderTimes":{"name":"一号场","times":["10:00","14:00"]},
+      "_userId":{"nick":"张三","mobile":"13764892915"}
+    },{
+      "_id":1,
+      "userNum": "u1001",
+      "spaceName": "1号场地",
+      "createTime": 1443274629189,
+      "date":"2015-07-09",
+      "price": "50",
+      "time": "2015-07-09",
+      "orderStatus": "2",
+      "orderTimes":{"name":"一号场","times":["10:00","14:00"]},
+      "_userId":{"nick":"张三","mobile":"13764892915"}
+    },{
+      "_id":1,
+      "userNum": "u1001",
+      "spaceName": "1号场地",
+      "createTime": 1443274629189,
+      "date":"2015-07-09",
+      "price": "50",
+      "time": "2015-07-09",
+      "orderStatus": "3",
+      "orderTimes": [
+        {
+          "_id": 0,
+          "name": "一号场地",
+          "times": [
+            "08:00",
+            "22:00"
+          ]
+        }
+      ],
+      "_userId":{"nick":"张三","mobile":"13764892915"}
+    }
+  ],
+  "paging": {
+    "pageCount": 1,
+    "itemCount": 3
+  }
+}

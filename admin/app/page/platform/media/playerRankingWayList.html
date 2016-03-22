@@ -1,0 +1,162 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        新媒体信息发布
+        <small>维护排名分类信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#newstypeList">新媒体信息发布</a></li>
+        <li class="active">球星排名分类</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">排名分类列表</h3>
+            <div class="box-tools">
+                <div class="input-group pull-left">
+                    <input type="text" class="form-control input-sm" ng-model="searchField" placeholder="排名名称" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default" ng-click="reload()"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <a href="javascript:;" ng-click="showModalWindow()" class="btn btn-default btn-sm"  data-toggle="modal">
+                        <i class="fa fa-plus-circle"></i> 新增
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>排序号</th>
+                    <th>排名名称</th>
+                    <th>生成排名方式</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="way in datas">
+                    <td>{{way.sortNum}}</td>
+                    <td>{{way.name}}</td>
+                    <td>{{way.type|rankingWayTypeTag}}</td>
+                    <td>{{way.enableStatus|renderFlag}}</td>
+                    <td>
+                        <a href="javascript:;" ng-click="showModalWindow(way.id)" id="updateBtn" title="编辑"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:;" title="删除" data-toggle="modal" ng-click="deleteWay($index)"><i class="fa fa-remove"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <p class="pull-left">
+                共<span>{{itemCount}}</span>条记录，
+                当前是第<span>{{currentPage}}/{{pageCount}}</span>页
+            </p>
+            <ul id="pagination"></ul>
+        </div>
+    </div>
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="modalWin">
+        <div class="modal-dialog">
+            <form novalidate name="newstypeForm" ng-submit="saveWay(newstypeForm.$valid)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">添加/修改排名分类</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="hidden"  ng-model="public.id"/>
+                                    <label>排名名称</label>
+                                    <input type="text" name="name" ng-model="public.name" class="form-control" required />
+                                    <div class="help-block help-block-error" ng-show="(submitted||newstypeForm.name.$dirty) && newstypeForm.name.$error.required">名称不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select ng-model="public.enableStatus"  name="enableStatus" ng-options="x.id as x.name for x in deleteOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||newstypeForm.enableStatus.$dirty) && newstypeForm.enableStatus.$error.required">启用状态不能为空！</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>排序号</label>
+                                    <input type="text" name="sortNum" ng-model="public.sortNum" class="form-control" required positiveinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||newstypeForm.sortNum.$dirty) &&newstypeForm.sortNum.$invalid">必须为正整数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>生成排名方式</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="type" ng-model="public.type" value="0">手动添加
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" ng-model="public.type" value="1">自动生成
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="public.type==1">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select name="sex" ng-model="public.condition.sex" ng-options="x.id as x.name for x in sexOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>国籍</label>
+                                    <select class="form-control select2" id="selCountry" name="country" ng-model="public.condition.country">
+                                        <option>全部</option>
+                                        <optgroup label="{{countryGroup.groupName}}" ng-repeat="countryGroup in countryOptions">
+                                            <option ng-repeat="countryData in countryGroup.dataList">{{countryData}}</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="public.type==1">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>比赛方式</label>
+                                    <select name="palyType" ng-model="public.condition.palyType" ng-options="x.id as x.name for x in playOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>运动员职业</label>
+                                    <select name="profession" ng-model="public.condition.profession" ng-options="x.id as x.name for x in professionOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>

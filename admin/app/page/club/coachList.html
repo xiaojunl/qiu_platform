@@ -1,0 +1,251 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        教练管理
+        <small>添加以及查看教练信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#coachList">教练管理</a></li>
+        <li class="active">教练信息</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">教练信息列表</h3>
+            <div class="box-tools">
+                <div class="input-group pull-left">
+                    <input type="text" class="form-control input-sm" ng-model="searchField" placeholder="姓名" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default" ng-click="reload()"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <a href="javascript:;" class="btn btn-default btn-sm"  data-toggle="modal" ng-click="showAddModalSpace()">
+                        <i class="fa fa-plus-circle"></i> 新增
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="check-all" />
+                        </label>
+                    </th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>专业等级</th>
+                    <th>教龄</th>
+                    <th>收费标准(元/课时)</th>
+                    <th>单均价</th>
+                    <th>是否包含场地费</th>
+                    <th>服务人次</th>
+                    <th>成交金额</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="space in datas">
+                    <td>
+                        <label>
+                            <input type="checkbox" name="spaceId" ng-value="spaceId._id" />
+                        </label>
+                    </td>
+                    <td>{{space.name}}</td>
+                    <td>{{space.sex|sexFlag}}</td>
+                    <td>{{space.level}}</td>
+                    <td>{{space.age}}</td>
+                    <td>{{space.price}}</td>
+                    <td ng-show="space.manCount!=0">{{space.priceTotal/space.manCount}}</td>
+                    <td ng-show="space.manCount==0">0</td>
+                    <td>{{space.spacePriceFlg|spacePriceFlg}}</td>
+                    <td>{{space.manCount}}</td>
+                    <td>{{space.priceTotal}}</td>
+                    <td>
+                        <a href="javascript:;" id="updateBtn" title="编辑" ng-click="showUpdateModalSpace($index)"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:;" title="教练详情" ng-click="showCoachDetail($index)"><i class="fa fa-info-circle"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <p class="pull-left">
+                共<span>{{itemCount}}</span>条记录，
+                当前是第<span>{{currentPage}}/{{pageCount}}</span>页
+            </p>
+            <ul id="pagination"></ul>
+        </div>
+    </div>
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="addModalSpace">
+        <div class="modal-dialog">
+            <form novalidate name="addFormSpace" ng-submit="addSpace(addFormSpace.$valid)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">添加/修改教练信息</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="hidden"  ng-model="coach.id"/>
+                                    <label>姓名</label>
+                                    <input type="text" name="name" ng-model="coach.name" class="form-control" required />
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.name.$dirty) && addFormSpace.name.$error.required">教练名称不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select ng-model="coach.sex" ng-options="x.id as x.name for x in sexOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>职业等级</label>
+                                    <select ng-model="coach.level" ng-options="x.id as x.name for x in levelOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>教龄</label>
+                                    <input type="text" name="age" ng-model="coach.age" class="form-control" required positiveinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.age.$dirty) &&addFormSpace.age.$invalid">必须为正整数！</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>收费标准(元/课时)</label>
+                                    <input type="text" name="price" ng-model="coach.price" class="form-control" required priceformat/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.price.$dirty) &&addFormSpace.price.$invalid">价格必须为非负数,只能带两位小数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>是否包含场地费</label>
+                                    <select ng-model="coach.spacePriceFlg" ng-options="x.id as x.name for x in spacePriceOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>介绍</label>
+                                    <textarea ng-model="coach.introduce" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select ng-model="coach.deleteFlg" ng-options="x.id as x.name for x in deleteOptions" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>头像</label>
+                                    <input type="file" name="uploadImg" ng-model="coach.uploadImg" ng-file-select="onImgSelect($files)" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <img src="{{coach.imgUrl}}" class="img-responsive" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="coachDetailModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">教练详情</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td rowspan="3" class="w-120 no-border">
+                                <img src="{{imgServerPath+coachDetail.imgUrl}}" class="app-thumb" />
+                            </td>
+                            <td class="no-border">
+                                <span class="text-bold">{{coachDetail.name}}</span>
+                            </td>
+                            <td class="no-border">累计接单：{{coachDetail.manCount}}单</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                专业：
+							<span>
+								{{coachDetail.professAvg}}
+							</span>
+                            </td>
+                            <td>单均价：{{coachDetail.avgPrice}}元</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                沟通：
+							<span>
+								{{coachDetail.communicationAvg}}
+							</span>
+                            </td>
+                            <td>成交额：{{coachDetail.priceTotal}}元</td>
+                        </tr>
+                    </table>
+
+                    <div class="comment-panel">
+                        <h3 class="title">评论详情</h3>
+                        <div class="chat">
+                            <div class="item" ng-repeat="comment in coachDetail.comments |orderBy:'-time'">
+                                <img src="{{imgServerPath+comment._userId.imgUrl}}" alt="" class="online">
+                                <p class="message">
+                                    <a href="#" class="name">
+                                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{comment.time|longDateTimeRender}}</small>
+                                        {{comment._userId.username}}
+                                    </a>
+                                    {{comment.comm}}
+                                </p>
+                            </div>
+                            <div align="center" class="item" ng-show="coachDetail.comments.length==0">
+                                无评论记录
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Modals -->
+
+</section>

@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>定场地</title>
+</head>
+
+<body>
+<div class="sub_head"><a href="javascript:history.go(-1)" class="fl"><img src="images/icon6.png" /></a><span>{{venue.name}}</span><a href="index.html" class="fr"><img src="images/icon5.png" /></a></div>
+<div class="conter">
+    <div class="tk_tab">
+        <a href="#venueDetail/{{venue._id}}"><dl>
+            <dt><img src="{{imgServerPath+venue.imgUrls[0]}}" /><span ng-show="venue.refundFlg==1">支持退款</span><span ng-show="venue.refundFlg==0">不支持退款</span></dt>
+            <dd><span><em>{{venue.address.city+venue.address.area+venue.address.street}}
+                </em><i><img ng-show="hasProps(3)" src="images/cd_ico.png" /><img ng-show="hasProps(2)"  src="images/cd_ico2.png" />
+                <img ng-show="hasProps(4)"  src="images/cd_ico3.png" /><img ng-show="hasProps(1)"  src="images/cd_ico4.png" />
+                <img ng-show="hasProps(6)" src="images/cd_ico5.png" /><img ng-show="hasProps(5)" src="images/cd_ico6.png" />
+                <img ng-show="hasProps(7)" src="images/cd_ico7.png" /><img ng-show="hasProps(8)" src="images/cd_ico8.png" /></i></span>
+                <p><img src="images/sjx_r.png" /></p>
+            </dd>
+        </dl>
+        </a>
+    </div>
+    <div id="wrapper" class="time_tab tab_hg">
+        <ul class="scroll">
+            <li ng-repeat="dayWeek in dayWeekArray" on-finish-render-filters ng-click="getPlacePriceByDay(dayWeek.ymd)"><em>{{dayWeek.week}}</em>{{dayWeek.md}}<i ng-show="clickDay==dayWeek.ymd">剩余{{PlaceDayPrice.ableCount-timesCount}}场</i></li>
+        </ul>
+    </div>
+    <div class="time_cd">
+        <h4 id="day-range"><p class="current"><i class="bg">上午</i></p><p><i class="bg2">下午</i></p><p><i class="bg3">晚上</i></p></h4>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="book-t">
+            <tr>
+                <td class="nobr"></td>
+                <td class="nobr" ng-repeat="timeValue in morningRange">{{timeValue}}</td>
+            </tr>
+            <tr ng-repeat="place in PlaceDayPrice.prices">
+                <td class="nobr">{{place.name}}</td>
+                <td ng-repeat="timeValue in morningRange" ng-init="timeReservStatus=getTimeReservStatus(place._id,timeValue)" ng-class="getTimeTdClass(timeReservStatus)" ng-click="totalByTdClick(timeReservStatus,place._id,timeValue,place.price,place.name)">
+                    <div ng-show="timeReservStatus!=4">￥{{place.price}}</div>
+                    <div ng-show="timeReservStatus==4">已预订</div>
+                </td>
+            </tr>
+
+
+        </table>
+        <!--中午--><table width="100%" border="0" cellspacing="0" cellpadding="0" class="book-t">
+        <tr>
+            <td class="nobr"></td>
+            <td class="nobr" ng-repeat="timeValue in afternoonRange">{{timeValue}}</td>
+        </tr>
+        <tr ng-repeat="place in PlaceDayPrice.prices">
+            <td class="nobr">{{place.name}}</td>
+            <td ng-repeat="timeValue in afternoonRange" ng-init="timeReservStatus=getTimeReservStatus(place._id,timeValue)" ng-class="getTimeTdClass(timeReservStatus)"  ng-click="totalByTdClick(timeReservStatus,place._id,timeValue,place.price,place.name)">
+                <div ng-show="timeReservStatus!=4">￥{{place.price}}</div>
+                <div ng-show="timeReservStatus==4">已预订</div>
+            </td>
+        </tr>
+
+    </table>
+        <!--晚上--->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="book-t">
+            <tr>
+                <td class="nobr"></td>
+                <td class="nobr" ng-repeat="timeValue in eveningRange">{{timeValue}}</td>
+            </tr>
+            <tr ng-repeat="place in PlaceDayPrice.prices">
+                <td class="nobr">{{place.name}}</td>
+                <td ng-repeat="timeValue in eveningRange" ng-init="timeReservStatus=getTimeReservStatus(place._id,timeValue)" ng-class="getTimeTdClass(timeReservStatus)" ng-click="totalByTdClick(timeReservStatus,place._id,timeValue,place.price,place.name)">
+                    <div ng-show="timeReservStatus!=4">￥{{place.price}}</div>
+                    <div ng-show="timeReservStatus==4">已预订</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="Price"><span>已约<em>{{timesCount}}</em>场次，共<em>￥{{timesPriceTotal}}</em>元</span>
+    <p ng-show="venue.scheduleFlg==1"><a href="javascript:;" ng-click="submitOrder()">提交订单</a></p>
+    <p class="no" ng-show="venue.scheduleFlg==0">提交订单</p>
+</div>
+</body>
+</html>

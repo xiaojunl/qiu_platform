@@ -1,0 +1,199 @@
+{
+  "qiniu": {
+    "accessKey": "",
+    "secretKey": "",
+    "bucket": "xxx"
+  },
+  "luosimao": {
+    "smsKey": "",
+    "voiceKey": ""
+  },
+  "weixin": {
+    "wechat": {
+      "app": {
+        "id": "",
+        "secret": "",
+        "token": "dga23"
+      },
+      "merchant": {
+        "id": "",
+        "key": "",
+        "pfx": "a",
+        "pfxKey": "pk"
+      },
+      "certificate": {
+        "pkcs12": "/srv/conf/apiclient_cert.p12",
+        "key": "",
+        "keyPath": "/srv/conf/apiclient_key.pem"
+      },
+      "urls": {
+        "js": {
+          "main": "http://xxx.xx/wechat/"
+        },
+        "oauth": {
+          "init": "/wechat",
+          "redirect": "/wechat",
+          "success": "http://pay.domain.com/successAndReadyToPay"
+        }
+      }
+    },
+    "app": {
+      "app": {
+        "id": "",
+        "secret": "",
+        "token": "dga24"
+      },
+      "merchant": {
+        "id": "",
+        "key": "",
+        "pfx": "b",
+        "pfxKey": "kp"
+      },
+      "certificate": {
+        "pkcs12": "/srv/conf/apiclient_app_cert.p12",
+        "key": "",
+        "keyPath": "/srv/conf/apiclient_app_key.pem"
+      }
+    },
+    "notifyUrl": "http://localhost:8000/api/notify/weixin",
+    "notifyUrl4App": "http://localhost:8000/api/notify/weixin4app",
+    "spbillCreateIp": ""
+  },
+  "alipay": {
+    "partner": "",
+    "key": "",
+    "seller": "",
+    "charset": "utf-8",
+    "cacert": "/srv/conf/cacert.pem",
+    "signType": "RSA",
+    "httpsVerifyUrl": "https://mapi.alipay.com/gateway.do?service=notify_verify&partner=%s&notify_id=%s",
+    "getwayUrl": "https://mapi.alipay.com/gateway.do?",
+    "callServerUrl": "http://localhost:8000/api/notify/alipay"
+  },
+  "getui": {
+    "appId": "",
+    "appKey": "",
+    "masterSecret": "",
+    "host": "http://sdk.open.api.igexin.com/apiex.htm"
+  },
+  "holiday": {
+    "hostname": "apis.baidu.com",
+    "path": "/xiaogg/holiday/holiday?d=%s",
+    "apiKey": "",
+    "todayIsHoliday": true
+  },
+  "api_key": "",
+  "redis": {
+    "host": "localhost",
+    "port": 6097
+  },
+  "multipart": {
+    "keepExtensions": true
+  },
+  "near": {
+    "maxDistance": 3000,
+    "num": 1000,
+    "limit": 5,
+    "maxLimit": 10000000000
+  },
+  "session": {
+    "name": "xxx.sid",
+    "secret": "22461536bbe7c38b158be4e106fe668624e8ad07",
+    "cookie": {
+      "path": "/",
+      "httpOnly": false,
+      "maxAge": 1800000
+    },
+    "rolling": true,
+    "resave": true,
+    "saveUninitialized": true,
+    "proxy": null
+  },
+  "common": {
+    "serviceTelephone": ""
+  },
+  "openAuth": {
+    "[A-Za-z0-9/]*/user/login": false,
+    "/api/user": false,
+    "/api/docs/\\S*": false,
+    "/api": false,
+    "/api/notify/\\S*": false,
+    "/api/hooks": false,
+    "/api/backend/\\S*": false
+  },
+  "accessAuth": {
+    "/api/order/?\\S*": false,
+    "/api/user/reg": true,
+    "/api/user/passwd": true,
+    "/api/user/login": true,
+    "/api/user/push": true,
+    "/api/user/exists/\\S*": true,
+    "/api/user/?\\S*": false,
+    "/api/arrange~get": true,
+    "/api/arrange/recomm": true,
+    "/api/arrange/\\d+~get": true,
+    "/api/arrange/?\\S*": false,
+    "/api/address/?\\S*": false,
+    "/api/pay/sign4wx": false
+  },
+  "onepage": [
+    {
+      "type": 1,
+      "name": "关于xxx"
+    },
+    {
+      "type": 2,
+      "name": "加入我们"
+    },
+    {
+      "type": 3,
+      "name": "注册协议"
+    },
+    {
+      "type": 4,
+      "name": "隐私说明"
+    },
+    {
+      "type": 5,
+      "name": "常见问题"
+    }
+  ],
+  "msgTpl": [
+    {
+      "type": 1,
+      "name": "用户注册短信推送模板",
+      "content": "欢迎注册xxx"
+    },
+    {
+      "type": 2,
+      "name": "场馆接单消息推送模板",
+      "content": ""
+    },
+    {
+      "type": 3,
+      "name": "场馆接单短信推送模板",
+      "content": ""
+    },
+    {
+      "type": 4,
+      "name": "场馆拒绝接单消息推送模板",
+      "content": ""
+    },
+    {
+      "type": 5,
+      "name": "场馆拒绝接单短信推送模板",
+      "content": ""
+    },
+    {
+      "type": 6,
+      "name": "退款成功消息推送模板",
+      "content": ""
+    },
+    {
+      "type": 7,
+      "name": "退款成功短信推送模板",
+      "content": ""
+    }
+  ],
+  "isProduction": true
+}

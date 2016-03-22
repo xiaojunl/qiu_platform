@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>订单信息</title>
+</head>
+
+<body>
+<div class="order_head"><a href="javascript:history.go(-1)" class="fl"><img src="images/icon6.png" /></a><span>订单详情</span><a href="javascript:;" ng-click="cancelOrder()" class="fr">撤销</a></div>
+<div class="order">
+    <ul>
+        <li><span>{{typeName}}</span>
+            <p>{{typeValue}}</p>
+        </li>
+        <li><span>预订日期</span>
+            <p>{{orderDetail.date}}</p>
+        </li>
+        <li><span ng-show="orderDetail.type==1">预订场地</span><span ng-show="orderDetail.type!=1">预订教练</span>
+            <p>
+                <b ng-repeat="orderTime in orderDetail.orderTimes"><i ng-repeat="time in orderTime.times">{{orderTime.name}}  {{time|timeRender}}<br></i></b>
+            </p>
+        </li>
+    </ul>
+    <ul>
+        <li><span>订单金额</span>
+            <p><em>{{orderDetail.price}}</em></p>
+        </li>
+        <li class="dz"><span><label><input type="checkbox" disabled="disabled" />&nbsp;可用运动豆子{{sportBeans}}个</label></span>
+            <p><em>￥{{sportBeans}}</em></p>
+            <b>仅支持客户端使用</b>
+        </li>
+        <li><span>还需支付</span>
+            <p><em>￥{{orderDetail.price}}</em></p>
+        </li>
+    </ul>
+</div>
+<div class="btn" ng-show="isCanPay==0"><a href="javascript:;" ng-click="paymentOrder()">微信支付</a></div>
+</body>
+</html>

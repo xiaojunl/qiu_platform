@@ -1,0 +1,99 @@
+
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        新媒体基础数据
+        <small>背景图信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#publicTagList">新媒体基础数据</a></li>
+        <li class="active">背景图管理</li>
+    </ol>
+</section>
+<!-- /Content Header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <p class="text-bold">赛事背景图</p>
+                    <div class="form-group" ng-show="gameBackGroundUrl==''">
+                        <form novalidate ng-submit="uploadBackGround(1)">
+                            <div class="input-group">
+                                <input type="file" class="form-control" ng-file-select="onUploadGroundPicSelect($files,1)"/>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-save">保存</button>
+                                </span>
+                            </div>
+                            <p class="help-block">支持jpeg、jpg、png格式</p>
+                        </form>
+                    </div>
+                    <div class="thumb-wrapper" ng-show="gameBackGroundUrl!=''">
+                        <img src="{{imgServerPath+gameBackGroundUrl}}" class="center-block img-responsive" />
+                        <a href="javascript:;" class="thumb-del" ng-click="switchBackGround(1)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="text-bold">球星背景图</p>
+                    <div class="form-group" ng-show="playerBackGroundUrl==''">
+                        <form novalidate ng-submit="uploadBackGround(2)">
+                            <div class="input-group">
+                                <input type="file" class="form-control" ng-file-select="onUploadGroundPicSelect($files,2)"/>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-save">保存</button>
+                                </span>
+                            </div>
+                            <p class="help-block">支持jpeg、jpg、png格式</p>
+                        </form>
+                    </div>
+                    <div class="thumb-wrapper" ng-show="playerBackGroundUrl!=''">
+                        <img src="{{imgServerPath+playerBackGroundUrl}}" class="center-block img-responsive" />
+                        <a href="javascript:;" class="thumb-del" ng-click="switchBackGround(2)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="text-bold">专题背景图</p>
+                    <div class="form-group" ng-show="specialBackGroundUrl==''">
+                        <form novalidate ng-submit="uploadBackGround(3)">
+                            <div class="input-group">
+                                <input type="file" class="form-control" ng-file-select="onUploadGroundPicSelect($files,3)"/>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-save">保存</button>
+                                </span>
+                            </div>
+                            <p class="help-block">支持jpeg、jpg、png格式</p>
+                        </form>
+                    </div>
+                    <div class="thumb-wrapper" ng-show="specialBackGroundUrl!=''">
+                        <img src="{{imgServerPath+specialBackGroundUrl}}" class="center-block img-responsive" />
+                        <a href="javascript:;" class="thumb-del" ng-click="switchBackGround(3)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main content -->
+
+<script type="text/javascript">
+    $(function() {
+        //鼠标悬浮时显示删除按钮
+        $(".thumb-wrapper").hover(function() {
+            $(this).find(".thumb-del").show();
+        }, function() {
+            $(this).find(".thumb-del").hide();
+        });
+    });
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>找俱乐部</title>
+</head>
+
+<body>
+<div class="order_head"><a href="#reservClub" class="fl"><img src="images/icon6.png" /></a><span>教练</span><a href="#/clubDetail/{{clubId}}" class="fr zjlb3"><img src="images/icoCon_03.png" /></a></div>
+<div class="coach">
+
+<a href="#coachDetail/{{coach._id}}" class="list" ng-repeat="coach in coachList">
+  <div class="img"><img src="{{imgServerPath+coach.imgUrl}}" /></div>
+  <div class="text">
+    <span>{{coach.name}}</span>
+    <i ng-show="coach.spacePriceFlg==1">{{coach.price}}元/课时（含场地费）</i>
+    <i ng-show="coach.spacePriceFlg!=1">{{coach.price}}元/课时（不含场地费）</i>
+    <p>教龄:<b>{{coach.age}}年</b>沟通:<b>{{coach.communicationAvg}}</b>专业:<b>{{coach.professAvg}}</b></p>
+   </div>
+  </a>
+
+</div>
+<div class="more" ng-click="loadMoreCoache()"><label ng-show="hasMore==false">内容已加载完毕</label><label ng-show="hasMore==true">点击此处展示更多数据</label></div>
+</body>
+</html>

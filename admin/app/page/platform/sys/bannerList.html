@@ -1,0 +1,56 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        系统管理
+        <small>查看维护banner信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#sysMessageList">系统管理</a></li>
+        <li class="active">BANNER管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">BANNER信息列表</h3>
+            <div class="box-tools">
+                <div class="pull-right">
+                    <a href="#bannerUpload/-1" class="btn btn-default btn-sm"  data-toggle="modal">
+                        <i class="fa fa-plus-circle"></i> 添加BANNER
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>BANNER名称</th>
+                    <th>上次修改时间</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="banners in datas">
+                    <td>{{banners.name}}</td>
+                    <td>{{banners.modifyTime|longDateTimeRender}}</td>
+                    <td>
+                        <a href="#bannerUpload/{{banners._id}}" id="updateBtn" title="编辑" ng-click="showUpdateModalBanner($index)"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:;" title="删除" data-toggle="modal" ng-click="deleteBanner($index)"><i class="fa fa-remove"></i></a>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+
+        </div>
+    </div>
+
+
+
+</section>

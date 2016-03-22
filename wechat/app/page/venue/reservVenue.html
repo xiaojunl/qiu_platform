@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>场地</title>
+</head>
+<body>
+<div class="sub_head"><a href="javascript:history.go(-1)" class="fl"><img src="images/icon6.png" /></a><span>订场地</span><a href="index.html" class="fr"><img src="images/icon5.png" /></a></div>
+<div class="hell">
+    <div class="dy_title"><a href="javascript:;" class="accordion">{{cityTip}}</a>
+        <div class="nav_dis accordion-desc">
+            <div id="scroll">
+                <ul>
+                    <li ng-click="areaClick('')">全城</li><li ng-repeat="areaInfo in areaArray" ng-click="areaClick(areaInfo)">{{areaInfo}}</li>
+                </ul>
+            </div>
+        </div>
+        <a href="javascript:;" class="accordion pr">排序方式</a>
+        <div class="px_dis accordion-desc">
+            <div id="scroll2">
+                <ul>
+                    <li ng-click="sortClick(0)">智能排序</li>
+                    <li ng-click="sortClick(1)">价格由低到高</li>
+                    <li ng-click="sortClick(2)">距离从近到远</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dy_list">
+        <a href="#placeList/{{venue._id}}" ng-repeat="venue in venueList">
+            <dl>
+                <dt><img src="{{imgServerPath+venue.imgUrl+'?imageMogr2/thumbnail/750x410'}}" style="height:410" />
+                <p>{{venue.priceMin}}元/小时起</p>
+                <span ng-show="venue.scheduleFlg==1">在线<br />预订</span>
+                <!--<span ng-show="venue.scheduleFlg==0" class="normal">不能<br />预订</span>-->
+                </dt>
+                <dd><span>{{venue.name}} <b>距离:{{venue.dis|disRender}}</b></span>
+                    <p>累计评价:<em>{{venue.commCount}}条</em>环境:<em>{{venue.envAvg}}</em>服务:<em>{{venue.serveAvg}}</em></p>
+                </dd>
+            </dl>
+        </a>
+    </div>
+</div>
+<div class="more" ng-click="loadMoreVenue()"><label ng-show="hasMore==false">内容已加载完毕</label><label ng-show="hasMore==true">点击此处展示更多数据</label></div>
+</body>
+</html>

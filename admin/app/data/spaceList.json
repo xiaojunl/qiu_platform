@@ -1,0 +1,97 @@
+{
+  "data": [
+    {
+      "_venueId": {
+        "_id": 0,
+        "name": "string",
+        "contactName": "string",
+        "mobile": "string",
+        "telephone": "string",
+        "address": "string",
+        "loc": [
+          0
+        ],
+        "props": [
+          0
+        ],
+        "imgUrls": [
+          "string"
+        ],
+        "beginTime": "string",
+        "endTime": "string",
+        "weekBeginTime": "string",
+        "weekEndTime": "string",
+        "lightChargeFlg": 0,
+        "trafficRoute": "string",
+        "flags": [
+          {
+            "_id": 0,
+            "flag": "string"
+          }
+        ],
+        "scheduleFlg": 0,
+        "refundFlg": 0,
+        "introduce": "string",
+        "comments": [
+          {
+            "_userId": {
+              "_id": 0,
+              "username": "string",
+              "password": "string",
+              "type": 0,
+              "_venueId": {},
+              "_clubId": {
+                "_id": 0,
+                "name": "string",
+                "contactName": "string",
+                "mobile": "string",
+                "address": "string",
+                "loc": [
+                  0
+                ],
+                "imgUrls": [
+                  "string"
+                ],
+                "beginTime": "string",
+                "endTime": "string",
+                "weekBeginTime": "string",
+                "weekEndTime": "string",
+                "trafficRoute": "string",
+                "flags": [
+                  {
+                    "_id": 0,
+                    "flag": "string"
+                  }
+                ],
+                "scheduleFlg": 0,
+                "refundFlg": 0,
+                "introduce": "string",
+                "coachCount": 0,
+                "createTime": 0,
+                "deleteFlg": 0
+              }
+            },
+            "env": 0,
+            "serve": 0,
+            "profess": 0,
+            "communication": 0,
+            "comm": "string"
+          }
+        ],
+        "placeCount": 0,
+        "createTime": 0,
+        "deleteFlg": 0
+      },
+      "name": "string",
+      "price": 0,
+      "weekPrice": 0,
+      "manCount": "string",
+      "priceTotal": "string",
+      "deleteFlg": "string"
+    }
+  ],
+  "paging": {
+    "pageCount": 0,
+    "itemCount": 0
+  }
+}

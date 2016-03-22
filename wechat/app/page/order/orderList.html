@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>我的订单</title>
+</head>
+
+<body>
+<div class="sub_head"><a href="index.html" class="fl"><img src="images/icon6.png" /></a><span>我的订单</span><a href="index.html" class="fr"><img src="images/icon5.png" /></a></div>
+<a href="#orderDetail/{{order._id}}" ng-repeat="order in orderList">
+    <div class="main_order">
+        <h3><span ng-show="order.type==1">{{order._venueId.name}}</span><span ng-show="order.type==2">{{order._clubId.name}}</span>
+            <p>{{order.status[0]._id|orderStatusFlag}}</p>
+        </h3>
+        <dl>
+            <dt><img ng-show="order.type==1" src="{{imgServerPath+order._venueId.imgUrls}}" /><img ng-show="order.type==2" src="{{imgServerPath+order._clubId.imgUrls}}" /></dt>
+            <dd><em>￥{{order.price}}</em>
+                <p><i>预订消费日期：{{order.date}}</i>
+                    <i>订单编号：{{order._id}}</i></p>
+            </dd>
+        </dl>
+    </div>
+</a>
+
+
+<div class="more"><a href="javascript:;"  ng-click="loadMoreOrder()" ng-show="hasMore==true">点击此处展示更多数据</a><label ng-show="hasMore==false">内容已加载完毕</label></div>
+</body>
+</html>

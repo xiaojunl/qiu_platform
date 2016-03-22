@@ -1,0 +1,44 @@
+{
+  "button": [
+    {
+      "name": "预订",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "订场地",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe71cc2b08bc4118e&redirect_uri=http%3A%2F%2Fxxx%2Fapi%2Fhooks&response_type=code&scope=snsapi_userinfo&state=venue#wechat_redirect"
+        },
+        {
+          "type": "view",
+          "name": "预约教练",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe71cc2b08bc4118e&redirect_uri=http%3A%2F%2Fxxx%2Fapi%2Fhooks&response_type=code&scope=snsapi_userinfo&state=coach#wechat_redirect"
+        }
+      ]
+    },
+    {
+      "name": "我的",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "订单查询",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe71cc2b08bc4118e&redirect_uri=http%3A%2F%2Fxxx%2Fapi%2Fhooks&response_type=code&scope=snsapi_userinfo&state=order#wechat_redirect"
+        },
+        {
+          "type": "view",
+          "name": "账号管理",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe71cc2b08bc4118e&redirect_uri=http%3A%2F%2Fxxx%2Fapi%2Fhooks&response_type=code&scope=snsapi_userinfo&state=account#wechat_redirect"
+        }
+      ]
+    },
+    {
+      "name": "更多",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "新手特权",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe71cc2b08bc4118e&redirect_uri=http%3A%2F%2Fxxx%2Fapi%2Fhooks&response_type=code&scope=snsapi_userinfo&state=tiequan#wechat_redirect"
+        }
+      ]
+    }
+  ]
+}

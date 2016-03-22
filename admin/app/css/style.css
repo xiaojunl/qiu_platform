@@ -1,0 +1,58 @@
+/* CSS Document */
+/*公共样式定义开始*/
+html,body,ul,ol,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,hr,input{margin:0;padding:0;border:0;}
+body{ color:#333; font-family:"微软雅黑","宋体","黑体",Arial; font-size:100%; background:#fff;}
+ul,li{list-style-type:none; margin:0; padding:0;}
+h1,h2,h3,h4,h5,h6 {font-size:100%; font-weight:normal;}
+input,button,textarea,select{font-family:"微软雅黑","宋体","黑体",Arial;  font-size:100%;}
+
+/*****默认全局样式超链接样式 ***/
+input[type=button]{
+    -webkit-appearance:none;
+    outline:none;}
+
+a {color: #444; text-decoration:none;}/*** 链接基本样式 ***/
+a:hover {color:#008fd7; text-decoration:underline; background:none;}/* 链接移上时的样式 */
+
+.inputButton{ background:#ff8a00; width:100%; text-align:center; border:0; border-radius:3px; color:#FFF; display:inline-block;line-height: 2.5em; cursor:pointer; }
+.inputButton:hover{ background:#ff8a00; color:#FFF;text-decoration:none;}
+
+
+/* 其它常用样式的定义 */
+.left{ float: left;}
+.right{ float: right;}
+.clear{ clear: both;}
+.noBorder{border:none;}
+.dashed{ background:url(../img/icon_logo_03.png) repeat-x 0 bottom;}
+.color{ color:#3076de;}
+.size10{ font-size:10px;}
+.mid{ margin:0 auto;}
+.relative{ position:relative;}
+.absolute{ position:absolute;}
+.w100{ width:100%;}
+.img10 img{ width:10px; height:10px;}
+.outbutton2{ padding-top:4em;}
+.w90{ width:90%;}
+
+img,li{ vertical-align:top; border:0;}/* 解决图片和LI的高*/
+img{ max-width:100%; height:auto; width:auto\9; /* ie8 */}
+
+
+/* new */
+.h70{ height:70px;}
+.fxgd{ position:fixed; top:0; width:100%;}
+.gdxz{ position:relative; background:#172734;}
+.gdxz a{ display:block; height:70px; text-decoration:none;}
+.gdxz span{ position:absolute; top:10px; left:10px;}
+.gdxz span img{ height:50px;}
+.gdxz dl{ padding:0 110px 0 75px; color:#fff; display:none}
+.gdxz dl dt{ font-size:18px; font-weight:bold; padding:11px 0 2px 0;}
+.gdxz dl dd{ font-size:14px;}
+.gdxz b{ display:block; color:#fff; width:90px; height:35px; text-align:center; background:#25a8a3; position:absolute; top:18px; right:10px; font-size:15px; line-height:35px; border-radius:3px;}
+
+.fxcon{ padding:0 10px;}
+.fxcon .title{ font-size:22px; line-height:32px; padding:18px 0 10px 0;}
+.fxcon .other{}
+.fxcon .other span{ margin-right:10px; color:#25a8a3;}
+.fxcon .other i{ font-style:normal; color:#999;}
+.fxcon .text{ font-size:16px; line-height:30px; padding:12px 0 30px 0;}

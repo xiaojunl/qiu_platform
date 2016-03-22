@@ -1,0 +1,102 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        球星管理
+        <small>维护专题信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#publicTagList">新媒体基础数据</a></li>
+        <li class="active">专题管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">添加/修改专题信息</h3>
+            <div class="box-tools">
+                <a href="javascript:history.go(-1)" class="btn btn-default btn-sm">
+                    <i class="fa fa-reply"></i> 返回
+                </a>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <form novalidate name="addFormSpace" ng-submit="saveMediaPublic(addFormSpace.$valid)">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="hidden"  ng-model="public.id"/>
+                                    <label>名称</label>
+                                    <input type="text" name="name" ng-model="public.name" class="form-control" required />
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.name.$dirty) && addFormSpace.name.$error.required">名称不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>简介</label>
+                                    <input type="text" name="intro" ng-model="public.intro" class="form-control" required ng-maxlength="20"/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.intro.$dirty) &&addFormSpace.intro.$invalid">请输入20字以内简介！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>排序号</label>
+                                    <input type="text" name="sortNum" ng-model="public.sortNum" class="form-control" required positiveinteger/>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.sortNum.$dirty) &&addFormSpace.sortNum.$invalid">排序号必须为正整数！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>启用状态</label>
+                                    <select name="enableStatus" ng-model="public.enableStatus" ng-options="x.id as x.name for x in deleteOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.enableStatus.$dirty) && addFormSpace.enableStatus.$error.required">启用状态不能为空！</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>是否推荐关注</label>
+                                    <select name="recommend" ng-model="public.recommend" ng-options="x.id as x.name for x in isFlagOptions" class="form-control" required></select>
+                                    <div class="help-block help-block-error" ng-show="(submitted||addFormSpace.recommend.$dirty) &&addFormSpace.recommend.$invalid">不能为空！</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>专题Logo</label>
+                                    <input type="file" name="logoUrl" ng-model="public.logoUrl" ng-file-select="onImgSelect($files)" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-3" ng-show="public.logoUrl!=null&&public.logoUrl!=''">
+                                <div class="form-group">
+                                    <img src="{{imgServerPath+public.logoUrl}}" class="img-responsive" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>封面图</label>
+                                    <input type="file" name="specialCoverUrl" ng-model="public.specialCoverUrl" ng-file-select="onSpecialCoverSelect($files)" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3" ng-show="public.specialCoverUrl!=null&&public.specialCoverUrl!=''">
+                                <div class="form-group">
+                                    <img src="{{imgServerPath+public.specialCoverUrl}}" class="img-responsive" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+<!-- /Main content -->

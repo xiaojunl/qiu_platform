@@ -1,0 +1,6567 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger xxx",
+    "contact": {
+      "name": "Swagger API Team",
+      "url": "http://swagger.io"
+    },
+    "license": {
+      "name": "Creative Commons 4.0 International",
+      "url": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "host": "127.0.0.1",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "sys",
+      "description": "系统级 API",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "user",
+      "description": "User Operations"
+    },
+    {
+      "name": "platform",
+      "description": "平台管理后台"
+    },
+    {
+      "name": "venue",
+      "description": "场馆方管理后台"
+    },
+    {
+      "name": "club",
+      "description": "俱乐部管理后台"
+    },
+    {
+      "name": "weixin",
+      "description": "微网站"
+    },
+    {
+      "name": "mobile",
+      "description": "移动端"
+    },
+    {
+      "name": "shop",
+      "description": "商城部分"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "user register",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "description": "用户名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "type",
+            "enum": [
+              2,
+              3,
+              4
+            ],
+            "default": 4,
+            "description": "用户类型：1:用户，2：场馆，3：俱乐部，4：平台",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "venue",
+          "club"
+        ],
+        "summary": "用户密码修改.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "weixin"
+        ],
+        "summary": "【账号管理】个人信息.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/reg": {
+      "post": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【用户注册】register",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "mobile",
+            "description": "手机号",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "captcha",
+            "description": "验证码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "有3个子错误：40001-无效手机号；40003-验证码过期；40004-验证码错误",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/passwd": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【忘记密码】reset.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "mobile",
+            "description": "手机号",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "captcha",
+            "description": "验证码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "有3个子错误：40001-无效手机号；40003-验证码过期；40004-验证码错误",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/passChange": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【重置密码】reset.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "newPassword",
+            "description": "新密码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40001-invalid password",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/sportBeans": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【订单详情】获取用户可用运动豆数.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "weixin"
+        ],
+        "summary": "【活动】领取运动豆.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "mobile",
+            "description": "手机号",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "sportBeans",
+            "description": "运动豆",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "captcha",
+            "description": "验证码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "460": {
+            "description": "46002-已领取，不能重复领取",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "有3个子错误：40001-无效手机号；40003-验证码过期；40004-验证码错误",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/sportBeans/list": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sId",
+            "description": "上拉加載，最后一条数据的 sportBenas._id，首次加载该参数不传",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "summary": "【充值】交易明细.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SportBeans"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/sportBeans/prepare": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "name": "payment",
+            "in": "formData",
+            "description": "支付方式：2:支付宝,3:微信移动支付",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              2,
+              3
+            ]
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "支付金额，必须为大于0的整形数字",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "summary": "【充值提交】提交金额/支付方式，获取微信签名",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "payment": {
+                  "type": "integer",
+                  "description": "支付方式：2:支付宝,3:微信移动支付"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "appId": {
+                      "type": "string"
+                    },
+                    "partnerId": {
+                      "type": "string"
+                    },
+                    "prepayId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user",
+          "mobile",
+          "platform"
+        ],
+        "summary": "【用户登录】user login.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "description": "用户名/手机号",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "type",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "default": 4,
+            "description": "用户类型：1:用户，2：场馆，3：俱乐部，4：平台",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "40102-无效的用户名或密码",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": [
+          "user",
+          "mobile",
+          "platform"
+        ],
+        "summary": "【用户退出登录】user logout.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/loc": {
+      "put": {
+        "tags": [
+          "weixin",
+          "user"
+        ],
+        "summary": "用戶定位地址上报.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "loc",
+            "description": "经纬度,[23.2,34.0]，经度在前，纬度于后",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "city",
+            "description": "城市名",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/info": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【账号设置】昵称/性别/签名 编辑",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "nick",
+            "description": "昵称",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "sex",
+            "description": "性别：{1:男，2:女,0:未知}",
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "signature",
+            "description": "签名",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【账号设置】获取nick/sex/imgUrl/signature",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/img": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【账号设置】上传头像",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "上传图片：file0",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40001-upload file is required.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/push": {
+      "post": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【推送】上报clientId&设备ID",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "clientId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "devId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deletes a user for test.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user._id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "40102-{id} must be a number.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/exists/{mobile}": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【用户注册】-验证手机号是否已注册.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mobile",
+            "description": "手机号",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "isExists": {
+                  "type": "boolean",
+                  "description": "true:存在，已注册;false:不存在，可以注册"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plat/venue": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "会员-场馆列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "searchField",
+            "description": "会员/场馆名查询",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "会员-新增场馆.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "description": "用户名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "场馆名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "contactName",
+            "description": "联系人",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "mobile",
+            "description": "联系电话",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40002-username exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "会员-修改场馆状态.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "description": "_venueId._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": "状态：0-启用，1-停用",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/plat/venue/{id}": {
+      "delete": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "Deletes a venue",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "_venueId._id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "40001-input id Invalid",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plat/club": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "会员-俱乐部列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "searchField",
+            "description": "会员/俱乐部名查询",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "会员-新增俱乐部.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "description": "用户名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "俱乐部名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "contactName",
+            "description": "联系人",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "mobile",
+            "description": "联系电话",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40002-username exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "会员-修改俱乐部状态.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "description": "_clubId._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": "状态：0-启用，1-停用",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/plat/club/{id}": {
+      "delete": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "Deletes a club",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "_clubId._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "40001-input id Invalid",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plat/order": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【订单管理】查询订单列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "type",
+            "description": "类型：订单类型 1:场馆，2：俱乐部，3：商城",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "in": "query",
+            "name": "beginTime",
+            "description": "查询开始日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "endTime",
+            "description": "查询结束日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "oId",
+            "description": "查询订单编号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "description": "查询用户ID",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "订单状态： {0:待支付,1:已支付,2:商家确认接单，3：交易成功，7:退款中,99：交易失败}，不传表示查询全部",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              7,
+              99
+            ]
+          },
+          {
+            "in": "query",
+            "name": "shopId",
+            "description": "查询店铺ID， _venueId or _clubId，不传表示不过滤",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Order"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plat/complain/{productId}": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "产品评论",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "product._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/plat/user": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【会员管理】新增会员统计.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "types": {
+                    "type": "array",
+                    "description": "类型对应新增数汇总，如：types:[{typeId:1,count:100}]",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "typeId": {
+                          "type": "integer",
+                          "description": "类型,{1:用户，2：场馆，3：俱乐部}"
+                        },
+                        "count": {
+                          "type": "integer",
+                          "description": "新增数"
+                        }
+                      }
+                    }
+                  },
+                  "_id": {
+                    "type": "integer",
+                    "description": "日期时间戳：1443225600000(表示2015-09-26)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plat/user/{mobile}": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【会员管理】 根据手机号查询用户注册时间",
+        "parameters": [
+          {
+            "name": "mobile",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "40401-user not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plat/upload": {
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【文件上传】for editor",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "上传图片：file0",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "filename": {
+                  "type": "string",
+                  "description": "文件名"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "40001-upload file is required.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/plat/arrange": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【约战】查询约战列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "beginTime",
+            "description": "查询开始日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "endTime",
+            "description": "查询结束日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "订单状态： {0：取消约战,1：报名中，2：已结束}，不传表示查询全部",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Arrange"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/venue": {
+      "get": {
+        "tags": [
+          "venue"
+        ],
+        "summary": "get current venue",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Venue"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "venue"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "_id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "场馆名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "contactName",
+            "description": "联系人",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "mobile",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "telephone",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Address"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "loc",
+            "description": "经纬度,[23.2,34.0]，经度在前，纬度于后,支持放入extra.loc",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "props",
+            "description": "场馆属性:{1:灯光,2:储物,3:停车,4:更衣室,5:设备销售,6:设备租赁,7:设备维修,8:有无wifi},支持放入extra.props",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "上传图片：file0",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file1",
+            "description": "上传图片：file1",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file2",
+            "description": "上传图片：file2",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file3",
+            "description": "上传图片：file3",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file4",
+            "description": "上传图片：file4",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "beginTime",
+            "description": "工作日营业时间,[08:00]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "endTime",
+            "description": "工作日营业时间,[22:03]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "weekBeginTime",
+            "description": "节假日营业时间,[08:00]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "weekEndTime",
+            "description": "节假日营业时间,[22:00]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "lightChargeFlg",
+            "description": "开灯收费 {0:不收费，1:收费}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "trafficRoute",
+            "description": "交通路线",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "flags",
+            "type": "array",
+            "description": "场馆标签,支持放入extra.flags",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "scheduleFlg",
+            "description": "是否接受预定 {0:不接受，1：接受}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "refundFlg",
+            "description": "是否接受退款 {0:不接受，1：接受}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "introduce",
+            "description": "场馆介绍",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "modify venue info.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/venue/order": {
+      "get": {
+        "tags": [
+          "venue"
+        ],
+        "summary": "【订单管理】查询订单列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "beginTime",
+            "description": "查询开始日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "endTime",
+            "description": "查询结束日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "oId",
+            "description": "查询订单编号",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "description": "查询用户ID",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "订单状态： {0:待支付,1:已支付,2:商家确认接单，3：交易成功，7:退款中,99：交易失败}，不传表示查询全部",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              7,
+              99
+            ]
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Order"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/venue/near": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定场馆】获取含有距离信息的场馆数据.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city",
+            "description": "所在城市名【上海市】，该参数主要区分不同城市区域同名，为必传",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "area",
+            "description": "所选区域【浦东新区】，如果是全城，则该参数不传",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "description": "排序方式：{0:智能排序,1:按价格由低到高,2:按距离从近到远}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "loc",
+            "description": "经纬度,[23.2,34.0]，经度在前，纬度于后",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "vId",
+            "description": "上拉加載，最后一条数据的 venue._id，首次加载该参数不传",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Venue"
+                  }
+                },
+                "more": {
+                  "type": "boolean",
+                  "description": "有更多数据:true,其他为:false"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/venue/space": {
+      "get": {
+        "tags": [
+          "venue"
+        ],
+        "summary": "场地列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "searchField",
+            "description": "场地名查询",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Space"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "venue"
+        ],
+        "summary": "新增场地.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "名称",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "price",
+            "description": "工作日价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "formData",
+            "name": "weekPrice",
+            "description": "节假日价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": "启用状态，{0:启用，1:未启用}",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40002-name exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "venue"
+        ],
+        "summary": "修改场地信息.",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "description": "场地ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "名称",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "price",
+            "description": "工作日价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "formData",
+            "name": "weekPrice",
+            "description": "节假日价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": "启用状态，{0:启用，1:未启用}",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40002-name exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/venue/space/{id}": {
+      "get": {
+        "tags": [
+          "venue"
+        ],
+        "summary": "get a space by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "space _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Space"
+            }
+          }
+        }
+      }
+    },
+    "/venue/detail/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定场馆】get venue details by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "venue _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Venue"
+            }
+          }
+        }
+      }
+    },
+    "/venue/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定场馆】get a venue by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "venue _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Venue"
+            }
+          }
+        }
+      }
+    },
+    "/venue/{id}/{date}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定场馆】获取日期下的场馆场地预定状态",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "venue._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "description": "查看日期时间戳，如：2015-09-22",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "object",
+                  "description": "时间区间，{beginTime:08:00,endTime:22:00,startTime:18:00}",
+                  "properties": {
+                    "beginTime": {
+                      "type": "string",
+                      "description": "开始时间，08:00"
+                    },
+                    "endTime": {
+                      "type": "string",
+                      "description": "时间区间：结束时间，22:00"
+                    },
+                    "startTime": {
+                      "type": "string",
+                      "description": "今天开始时间，18:00"
+                    }
+                  }
+                },
+                "prices": {
+                  "type": "array",
+                  "description": "场地价格列表,[{_id:0,price:333}]",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "integer",
+                        "description": "space._id"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "space.name"
+                      },
+                      "price": {
+                        "type": "number",
+                        "description": "价格"
+                      }
+                    }
+                  }
+                },
+                "orderTimes": {
+                  "type": "array",
+                  "description": "场地已订购时段列表,[{_id:0,times:[09:00,13:00]}]",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "integer",
+                        "description": "space._id"
+                      },
+                      "times": {
+                        "type": "array",
+                        "description": "时间段列表,[09:00,13:00]",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "ableCount": {
+                  "type": "integer",
+                  "description": "当前日期的可订场次，30"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/club": {
+      "get": {
+        "tags": [
+          "club"
+        ],
+        "summary": "get current club",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Club"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "club"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "_id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "俱乐部名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "contactName",
+            "description": "联系人",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "mobile",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "telephone",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Address"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "loc",
+            "description": "经纬度,[23.2,34.0]，经度在前，纬度于后,支持放入extra.loc",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "上传图片：file0",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file1",
+            "description": "上传图片：file1",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file2",
+            "description": "上传图片：file2",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file3",
+            "description": "上传图片：file3",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "file4",
+            "description": "上传图片：file4",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "beginTime",
+            "description": "工作日营业时间,[08:00]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "endTime",
+            "description": "工作日营业时间,[22:03]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "weekBeginTime",
+            "description": "节假日营业时间,[08:00]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "weekEndTime",
+            "description": "节假日营业时间,[22:00]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "trafficRoute",
+            "description": "交通路线",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "flags",
+            "type": "array",
+            "description": "标签,支持放入extra.flags",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "scheduleFlg",
+            "description": "是否接受预定 {0:不接受，1：接受}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "refundFlg",
+            "description": "是否接受退款 {0:不接受，1：接受}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "introduce",
+            "description": "介绍",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "modify club info.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/club/order": {
+      "get": {
+        "tags": [
+          "club"
+        ],
+        "summary": "【订单管理】查询订单列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "beginTime",
+            "description": "查询开始日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "endTime",
+            "description": "查询结束日期，如：2015-10-01，不传表示不限制",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "oId",
+            "description": "查询订单编号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "description": "查询用户ID",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "订单状态： {0:待支付,1:已支付,2:商家确认接单，3：交易成功，7:退款中,99：交易失败}，不传表示查询全部",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              7,
+              99
+            ]
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Order"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/club/near": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定俱乐部】获取含有距离信息的俱乐部数据.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city",
+            "description": "所在城市名【上海市】，该参数主要区分不同城市区域同名，为必传",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "area",
+            "description": "所选区域【浦东新区】，如果是全城，则该参数不传",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "description": "排序方式：{1:按价格由低到高,2:按距离从近到远}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "loc",
+            "description": "经纬度,[23.2,34.0]，经度在前，纬度于后",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cId",
+            "description": "上拉加載，最后一条数据的 club._id，首次加载该参数不传",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Club"
+                  }
+                },
+                "more": {
+                  "type": "boolean",
+                  "description": "有更多数据:true,其他为:false"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/club/coach": {
+      "get": {
+        "tags": [
+          "club"
+        ],
+        "summary": "教练列表.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "searchField",
+            "description": "教练姓名查询",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Coach"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "club"
+        ],
+        "summary": "新增教练.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "名称",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "sex",
+            "description": "性别：{0:男，1:女}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "level",
+            "description": "职业等级 国家一级/二级/三级运动员",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "age",
+            "description": "教齡",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "相片",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "introduce",
+            "description": "介绍",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "price",
+            "description": "工作日价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "formData",
+            "name": "spacePriceFlg",
+            "description": "是否包含场地费 {0:不包含，1:包含}",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40002-name exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "club"
+        ],
+        "summary": "修改教练信息.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "description": "场地ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "名称",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "sex",
+            "description": "性别：{0:男，1:女}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "level",
+            "description": "职业等级 国家一级/二级/三级运动员",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "age",
+            "description": "教齡",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "相片",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "introduce",
+            "description": "介绍",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "price",
+            "description": "工作日价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "formData",
+            "name": "spacePriceFlg",
+            "description": "是否包含场地费 {0:不包含，1:包含}",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": "启用状态，{0:启用，1:未启用}",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40002-name exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/club/coach/extra/{id}": {
+      "get": {
+        "tags": [
+          "club"
+        ],
+        "summary": "get extra coach by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "coach _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Coach"
+            }
+          }
+        }
+      }
+    },
+    "/club/coach/detail/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定俱乐部】get coach details by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "coach _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Coach"
+            }
+          }
+        }
+      }
+    },
+    "/club/coach/{id}": {
+      "get": {
+        "tags": [
+          "club"
+        ],
+        "summary": "get base coach by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "coach _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Coach"
+            }
+          }
+        }
+      }
+    },
+    "/club/coach/{id}/{date}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定俱乐部】获取日期下的教练预定状态",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "coach._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "description": "查看日期时间戳，如：2015-09-22",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "object",
+                  "description": "时间区间，{beginTime:08:00,endTime:22:00,startTime:18:00}",
+                  "properties": {
+                    "beginTime": {
+                      "type": "string",
+                      "description": "开始时间，08:00"
+                    },
+                    "endTime": {
+                      "type": "string",
+                      "description": "时间区间：结束时间，22:00"
+                    },
+                    "startTime": {
+                      "type": "string",
+                      "description": "今天开始时间，18:00"
+                    }
+                  }
+                },
+                "orderTimes": {
+                  "type": "array",
+                  "description": "教练已订购时段列表,[09:00,13:00]",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/club/details/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【俱乐部详情】get club details by club._id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "club._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Club"
+            }
+          }
+        }
+      }
+    },
+    "/club/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【预定俱乐部】获取教练列表",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "club._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Club"
+            }
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【产品管理】产品列表",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "searchField",
+            "description": "商品编号/名称/品牌查询",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Product"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【产品管理】新增",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/PostProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "460": {
+            "description": "46001-编号或商品名已存在",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【产品管理】编辑",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/PutProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "460": {
+            "description": "46001-编号或商品名已存在",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【产品】获取产品详情",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "product._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/activity": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【活动】列表",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "searchField",
+            "description": "活动名查询",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Activity"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【活动】新增",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "名称",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "type": "string",
+            "in": "formData",
+            "name": "beginDate",
+            "required": true,
+            "description": "开始日期：2015-10-17"
+          },
+          {
+            "type": "string",
+            "in": "formData",
+            "name": "endDate",
+            "required": true,
+            "description": "结束日期：2015-10-27"
+          },
+          {
+            "type": "number",
+            "in": "formData",
+            "name": "rebate",
+            "required": true,
+            "description": "折扣：8.5"
+          },
+          {
+            "type": "file",
+            "in": "formData",
+            "name": "file0",
+            "required": false,
+            "description": "图片"
+          },
+          {
+            "type": "array",
+            "in": "formData",
+            "name": "products",
+            "required": false,
+            "description": "活动产品Ids,支持放入extra.products",
+            "items": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【活动】编辑",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "description": "activity._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "名称",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "type": "string",
+            "in": "formData",
+            "name": "beginDate",
+            "required": true,
+            "description": "开始日期：2015-10-17"
+          },
+          {
+            "type": "string",
+            "in": "formData",
+            "name": "endDate",
+            "required": true,
+            "description": "结束日期：2015-10-27"
+          },
+          {
+            "type": "number",
+            "in": "formData",
+            "name": "rebate",
+            "required": true,
+            "description": "折扣：8.5"
+          },
+          {
+            "type": "file",
+            "in": "formData",
+            "name": "file0",
+            "required": false,
+            "description": "图片"
+          },
+          {
+            "type": "array",
+            "in": "formData",
+            "name": "products",
+            "required": false,
+            "description": "活动产品Ids,支持放入extra.products",
+            "items": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-只有未开始的活动可以编辑",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/activity/product": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【活动】产品列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/activity/{id}": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【活动-编辑&查看】获取活动详情",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "activity._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Activity"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【活动】删除活动",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "activity._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-只有未开始的活动可以删除",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/area/{city}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "get areas by city",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "description": "city:上海市",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/PostOrder"
+            }
+          }
+        ],
+        "summary": "【订单】提交新订单",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "integer",
+                  "description": "order._id"
+                }
+              }
+            }
+          },
+          "460": {
+            "description": "46001-存在已被他人选定时段,error.data结构：[{_id:space._id或coach._id,name:'1号馆',times:['09:00','12:00'}]，例如场馆：某场地的9点/12点 2个时段已被订购",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "oId",
+            "description": "上拉加載，最后一条数据的 order._id，首次加载该参数不传",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "summary": "【订单】下拉刷新方式获用戶订单数据",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Order"
+                  }
+                },
+                "more": {
+                  "type": "boolean",
+                  "description": "有更多数据:true,其他为:false"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/prepare": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "payment",
+            "in": "formData",
+            "description": "支付方式：2:支付宝,3:微信移动支付",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              2,
+              3
+            ]
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "支付金额，保留2位小数",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "sportBeans",
+            "in": "formData",
+            "description": "运动豆数",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "summary": "【订单提交】提交金额/运动豆/支付方式，获取微信签名",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "payment": {
+                  "type": "integer",
+                  "description": "支付方式：1:微信网页支付,2:支付宝,3:微信移动支付"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "appId": {
+                      "type": "string"
+                    },
+                    "partnerId": {
+                      "type": "string"
+                    },
+                    "prepayId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/PostPreOrder"
+            }
+          }
+        ],
+        "summary": "【商城订单提交】提交订单信息，并获取微信签名&支付订单编号",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "payment": {
+                  "type": "integer",
+                  "description": "支付方式：2:支付宝,3:微信移动支付"
+                },
+                "orderId": {
+                  "type": "integer",
+                  "description": "支付订单编号"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "appId": {
+                      "type": "string"
+                    },
+                    "partnerId": {
+                      "type": "string"
+                    },
+                    "prepayId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "40601-活动过期;40602-有产品无库存或已下架。提示错误信息后回到购物车",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/order/comment": {
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "comm",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "评论"
+          },
+          {
+            "name": "env",
+            "in": "formData",
+            "type": "integer",
+            "description": "【场馆】环境评分:1-5"
+          },
+          {
+            "name": "serve",
+            "in": "formData",
+            "type": "integer",
+            "description": "【场馆】服务评分:1-5"
+          },
+          {
+            "name": "profess",
+            "in": "formData",
+            "type": "integer",
+            "description": "【教练】专业评分:1-5"
+          },
+          {
+            "name": "communication",
+            "in": "formData",
+            "type": "integer",
+            "description": "【教练】沟通能力:1-5"
+          }
+        ],
+        "summary": "【订单评价】场馆&教练评价",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/PostComment"
+            }
+          }
+        ],
+        "summary": "【订单评价】商城订单-产品评价",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/order/confirm": {
+      "put": {
+        "tags": [
+          "venue",
+          "club",
+          "platform"
+        ],
+        "summary": "【订单状态变更】确认接单/已发货或拒绝取消订单",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "description": "order.status,2-接收订单/已发货,5-取消订单",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              2,
+              5
+            ]
+          },
+          {
+            "name": "reason",
+            "in": "formData",
+            "description": "原因",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "logistics",
+            "required": false,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Logistics"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-订单状态已改变",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "summary": "【确认收货】订单状态变更",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-订单状态已改变",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/order/complain": {
+      "post": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "summary": "【申述】发起申述",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "reason",
+            "in": "formData",
+            "description": "原因",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-订单状态已改变",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【申述】接受/拒绝",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accept",
+            "in": "formData",
+            "description": "是否接受：1-接受；0-拒绝",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "reason",
+            "in": "formData",
+            "description": "拒绝原因",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-订单状态已改变",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【订单】订单支付页数据获取",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【订单】撤掉订单",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "weixin",
+          "mobile",
+          "shop"
+        ],
+        "summary": "【订单】取消订单",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-订单已加入约战，不能取消",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "461": {
+            "description": "46101-不支持退款；46102-不支持退单，距离预约开始时间不到1小时或者状态变更或商城订单未付款订单可以取消",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/order/details/{id}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile",
+          "shop"
+        ],
+        "summary": "【订单】订单详情数据获取",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      }
+    },
+    "/shop/activity": {
+      "get": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "aId",
+            "description": "上拉加載，最后一条数据的 activity._id，首次加载该参数不传",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "summary": "【商城】活动列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Activity"
+                  }
+                },
+                "more": {
+                  "type": "boolean",
+                  "description": "有更多数据:true,其他为:false"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shop/{activityId}": {
+      "get": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "activityId",
+            "description": "activity._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "summary": "【商城】活动下的产品列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Activity"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "activityId",
+            "description": "activity._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "扩展支持集合参数传入,{productIds:[{_id:1,propId:1}]}",
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/PostProductIds"
+            }
+          }
+        ],
+        "summary": "【购物车】同步活动下用户选择产品信息",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Activity"
+            }
+          },
+          "400": {
+            "description": "40001-invalid productIds",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "406": {
+            "description": "40601-活动过期",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/shop/product/{id}": {
+      "get": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "product._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "summary": "【商城】产品详情",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arrange": {
+      "post": {
+        "tags": [
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "标题",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "num",
+            "in": "formData",
+            "description": "人数",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "money",
+            "in": "formData",
+            "description": "人均价格",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "_orderId",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "spaceId",
+            "in": "formData",
+            "description": "space._id or coach._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "orderTimes.name，场地名或教练名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date",
+            "in": "formData",
+            "description": "预约日期,2015-10-15",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "time",
+            "in": "formData",
+            "description": "预约时间,19:31",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "【约战】创建",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "aId",
+            "description": "上拉加載，最后一条数据的 arrange._id，首次加载该参数不传",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "city",
+            "description": "城市名：上海市",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "area",
+            "description": "区域，最后一条数据的 arrange._id，查询全城该参数不传",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "price",
+            "description": "费用：免费/价格由低到高，0：免费，1：价格由低到高，不查询该参数不传",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        ],
+        "summary": "【约战】同城约战列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Arrange"
+                  }
+                },
+                "more": {
+                  "type": "boolean",
+                  "description": "有更多数据:true,其他为:false"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arrange/play": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【约战】可选场次列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arrange/own": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【约战】我的约战",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Arrange"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arrange/recomm": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【约战】首页推荐约战",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Arrange"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arrange/{id}": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【约战】详情",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "arrange._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Arrange"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【约战】报名或取消",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "arrange._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "操作类型：0:取消约战,1:报名,2:取消报名",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "406": {
+            "description": "40601-取消约战，有人报名不能取消或状态已改变；40602-报名受超过报名人数限制;40603-取消报名受时间限制",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/finance/order": {
+      "get": {
+        "tags": [
+          "platform",
+          "venue",
+          "club"
+        ],
+        "summary": "【财务管理】按天统计订单状态",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "beginTime",
+            "description": "查询开始日期时间戳，如：1443225600000(表示2015-09-26)，不传表示不限制",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "endTime",
+            "description": "查询结束日期时间戳，如：1443225600000(表示2015-09-26)，不传表示不限制",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "查询订单类型，1:场馆，2：俱乐部，3：商城，不传表示不限制",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "types": {
+                    "type": "array",
+                    "description": "状态对应订单数及订单金额汇总，如：types:[{typeId:1,count:100,number:10000}]",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "typeId": {
+                          "type": "integer",
+                          "description": "订单状态,{1:已支付,2:商家确认接单，3：交易成功，4:用户取消订单,5:商家取消订单/拒绝订单}"
+                        },
+                        "count": {
+                          "type": "integer",
+                          "description": "订单数"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "订单金额"
+                        }
+                      }
+                    }
+                  },
+                  "_id": {
+                    "type": "integer",
+                    "description": "日期时间戳：1443225600000(表示2015-09-26)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banner": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【banner列表】获取Banner展示列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Banner"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "type",
+            "description": "类型，1:跳转后端指定的新闻操作页，2：html网页，3：无跳转，4：打开一个指定的URL",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "content",
+            "description": "type=1，新闻ID；type=2，html代码；type=4，url；type其他，不需要传值",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "上传图片：file0",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": " 状态：0：启用,1:停用",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              0
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "sort",
+            "description": "排序字段值",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "summary": "【banner编辑】modify.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "type",
+            "description": "类型，1:跳转后端指定的新闻操作页，2：html网页，3：无跳转，4：打开一个指定的URL",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "content",
+            "description": "type=1，新闻ID；type=2，html代码；type=4，url；type其他，不需要传值",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "file0",
+            "description": "上传图片：file0",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "deleteFlg",
+            "description": " 状态：0：启用,1:停用",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              0
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "sort",
+            "description": "排序字段值",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "summary": "【banner新增】add.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/banner/list": {
+      "get": {
+        "tags": [
+          "mobile",
+          "weixin"
+        ],
+        "summary": "【banner列表】获取Banner展示列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Banner"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banner/{id}": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【banner新增/编辑页】get a banner by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "banner _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Banner"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【banner列表】Deletes a banner by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "banner._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/banner/detail/{id}": {
+      "get": {
+        "tags": [
+          "mobile",
+          "weixin"
+        ],
+        "summary": "【banner html】html page.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "banner _id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/onepage/list": {
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【单页管理】获取展示列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Onepage"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/onepage/{type}": {
+      "get": {
+        "tags": [
+          "platform",
+          "mobile"
+        ],
+        "summary": "【单页管理详情页】html page",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "类型，1:关于xxx，2：加入我们，3：注册协议，4：隐私说明，5：常见问题",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "platform"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "类型，1:关于xxx，2：加入我们，3：注册协议，4：隐私说明，5：常见问题",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "in": "formData",
+            "name": "content",
+            "description": "html代码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "【单页管理编辑】modify.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/message": {
+      "post": {
+        "tags": [
+          "platform"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "类型，1:短信，2：消息推送，3：站内消息",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "name": "to",
+            "in": "formData",
+            "description": "对象，1：用户,2：场馆方,3:俱乐部",
+            "required": true,
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "description": "内容",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "【消息】 add news.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "platform"
+        ],
+        "summary": "【订单】下拉刷新方式获用戶订单数据",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Msg"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/msg/msg": {
+      "post": {
+        "tags": [
+          "venue",
+          "club"
+        ],
+        "parameters": [
+          {
+            "name": "msgId",
+            "in": "formData",
+            "description": "msg._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "summary": "【站内信息】 标记消息为已读，消息列表-消息状态未读，点击进入消息详情页前调用.",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "venue",
+          "club"
+        ],
+        "summary": "【站內消息】列表",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "每页最大条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Msg"
+                  }
+                },
+                "paging": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/msg/unReadCount": {
+      "get": {
+        "tags": [
+          "venue",
+          "club"
+        ],
+        "summary": "【站內消息】未读消息数",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "description": "未读消息数"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/address": {
+      "get": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【收货地址】列表",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SAddress"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【收货地址】新增",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "姓名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "mobile",
+            "required": true,
+            "type": "string",
+            "description": "手机号"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "required": true,
+            "type": "string",
+            "description": "详细地址"
+          },
+          {
+            "in": "formData",
+            "name": "deliveryTime",
+            "required": true,
+            "type": "integer",
+            "description": "送货时间 {1:节假日,2:工作日,3:不限}",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【收货地址】编辑",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "description": "address._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "姓名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "mobile",
+            "required": true,
+            "type": "string",
+            "description": "手机号"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "required": true,
+            "type": "string",
+            "description": "详细地址"
+          },
+          {
+            "in": "formData",
+            "name": "deliveryTime",
+            "required": true,
+            "type": "integer",
+            "description": "送货时间 {1:节假日,2:工作日,3:不限}",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/address/{id}": {
+      "delete": {
+        "tags": [
+          "mobile"
+        ],
+        "summary": "【收货地址】删除",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "address._id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/captcha/{type}/{mobile}": {
+      "get": {
+        "tags": [
+          "weixin",
+          "mobile"
+        ],
+        "summary": "【验证码】下发验证码",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "验证码类型-{bd:微信用户绑定手机号和领取豆子,ur:新用戶注册，up：忘记密码}",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "bd",
+              "ur",
+              "up"
+            ]
+          },
+          {
+            "name": "mobile",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "40001-错误的手机号码",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "503": {
+            "description": "40301-短信通道不可用，请稍后重试",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/notify/weixin": {
+      "post": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "pay notify from weixin."
+      }
+    },
+    "/notify/weixin4app": {
+      "post": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "pay notify from weixin 4app."
+      }
+    },
+    "/notify/alipay": {
+      "post": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "pay notify from alipay."
+      }
+    },
+    "/pay/sign4wx": {
+      "post": {
+        "tags": [
+          "weixin"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "支付金额，保留2位小数",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "sportBeans",
+            "in": "formData",
+            "description": "运动豆数",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "summary": "【微信支付】生成订单，获取签名",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appId": {
+                  "type": "string"
+                },
+                "timeStamp": {
+                  "type": "string"
+                },
+                "nonceStr": {
+                  "type": "string"
+                },
+                "package": {
+                  "type": "string"
+                },
+                "signType": {
+                  "type": "string"
+                },
+                "paySign": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "mobile",
+          "shop"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "formData",
+            "description": "order._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "支付金额，保留2位小数",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "sportBeans",
+            "in": "formData",
+            "description": "运动豆数",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "summary": "【商城订单重新支付】获取微信签名",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "payment": {
+                  "type": "integer",
+                  "description": "支付方式：3:微信移动支付"
+                },
+                "orderId": {
+                  "type": "integer",
+                  "description": "支付订单编号"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "appId": {
+                      "type": "string"
+                    },
+                    "partnerId": {
+                      "type": "string"
+                    },
+                    "prepayId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign/sign4jssdk": {
+      "get": {
+        "tags": [
+          "weixin"
+        ],
+        "summary": "【微信支付】JSSDK签名获取"
+      }
+    },
+    "/comm": {
+      "get": {
+        "tags": [
+          "mobile",
+          "weixin"
+        ],
+        "summary": "获取配置数据",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceTelephone": {
+                  "type": "string",
+                  "description": "客服电话，电话联系场馆/俱乐部统一拨打该号码"
+                },
+                "nowTime": {
+                  "type": "integer",
+                  "description": "当前时间戳"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hooks": {
+      "post": {
+        "summary": "自动化部署回调url",
+        "tags": [
+          "sys"
+        ]
+      },
+      "get": {
+        "summary": "微信code获取回调url",
+        "tags": [
+          "sys"
+        ]
+      }
+    },
+    "/sched/{op}": {
+      "get": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "schedule task."
+      }
+    },
+    "/backend/{type}/{mobile}": {
+      "get": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "【验证码】获取下发的最新验证码",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "验证码类型-{bd:微信用户绑定手机号和领取豆子,ur:新用戶注册，up：忘记密码}",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "bd",
+              "ur",
+              "up"
+            ]
+          },
+          {
+            "name": "mobile",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/backend/passwd/{id}/{newPass}": {
+      "get": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "修改密码",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user._id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "newPass",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/backend/pushMenu": {
+      "get": {
+        "tags": [
+          "sys"
+        ],
+        "summary": "微信菜单"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "_id",
+        "type"
+      ],
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer"
+        },
+        "imgUrl": {
+          "type": "string"
+        },
+        "_venueId": {
+          "$ref": "#/definitions/Venue"
+        },
+        "_clubId": {
+          "$ref": "#/definitions/Club"
+        }
+      }
+    },
+    "Venue": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name"
+      ],
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "description": "场馆名"
+        },
+        "contactName": {
+          "type": "string",
+          "description": "联系人"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "联系人手机号"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "loc": {
+          "type": "array",
+          "description": "经纬度,[23.2,34.0]，经度在前，纬度于后",
+          "items": {
+            "type": "number"
+          }
+        },
+        "props": {
+          "type": "array",
+          "description": "场馆属性:{1:灯光,2:储物,3:停车,4:更衣室,5:设备销售,6:设备租赁,7:设备维修,8:有无wifi}",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "imgUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "beginTime": {
+          "type": "string",
+          "description": "工作日营业时间"
+        },
+        "endTime": {
+          "type": "string"
+        },
+        "weekBeginTime": {
+          "type": "string",
+          "description": "节假日营业时间"
+        },
+        "weekEndTime": {
+          "type": "string"
+        },
+        "lightChargeFlg": {
+          "type": "integer",
+          "description": "开灯收费"
+        },
+        "trafficRoute": {
+          "type": "string",
+          "description": "交通路线"
+        },
+        "flags": {
+          "type": "array",
+          "description": "场馆标签",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scheduleFlg": {
+          "type": "integer",
+          "description": "是否接受预定 {0:不接受，1：接受}"
+        },
+        "refundFlg": {
+          "type": "integer",
+          "description": "是否接受退款 {0:不接受，1：接受}"
+        },
+        "introduce": {
+          "type": "string",
+          "description": "场馆介绍"
+        },
+        "comments": {
+          "type": "array",
+          "description": "评论",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "placeCount": {
+          "type": "integer",
+          "description": "场地数"
+        },
+        "envAvg": {
+          "type": "number",
+          "description": "环境平均评分:3.5"
+        },
+        "serveAvg": {
+          "type": "number",
+          "description": "服务平均评分"
+        },
+        "priceMin": {
+          "type": "number",
+          "description": "价格区间：低价"
+        },
+        "priceMax": {
+          "type": "number",
+          "description": "价格区间：高价"
+        },
+        "spaces": {
+          "type": "array",
+          "description": "场地集合",
+          "items": {
+            "$ref": "#/definitions/Space"
+          }
+        },
+        "createTime": {
+          "type": "integer",
+          "description": ""
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "启用状态，{0:启用，1:未启用}"
+        }
+      }
+    },
+    "Club": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name"
+      ],
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "description": "俱乐部名称"
+        },
+        "contactName": {
+          "type": "string",
+          "description": "联系人"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "联系人手机号"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "loc": {
+          "type": "array",
+          "description": "经纬度,[23.2,34.0]，经度在前，纬度于后",
+          "items": {
+            "type": "number"
+          }
+        },
+        "imgUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "beginTime": {
+          "type": "string",
+          "description": "工作日营业时间"
+        },
+        "endTime": {
+          "type": "string"
+        },
+        "weekBeginTime": {
+          "type": "string",
+          "description": "节假日营业时间"
+        },
+        "weekEndTime": {
+          "type": "string"
+        },
+        "trafficRoute": {
+          "type": "string",
+          "description": "交通路线"
+        },
+        "flags": {
+          "type": "array",
+          "description": "标签",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scheduleFlg": {
+          "type": "integer",
+          "description": "是否接受预定 {0:不接受，1：接受}"
+        },
+        "refundFlg": {
+          "type": "integer",
+          "description": "是否接受退款 {0:不接受，1：接受}"
+        },
+        "introduce": {
+          "type": "string",
+          "description": "介绍"
+        },
+        "priceMin": {
+          "type": "number",
+          "description": "价格区间：低价"
+        },
+        "priceMax": {
+          "type": "number",
+          "description": "价格区间：高价"
+        },
+        "coachCount": {
+          "type": "integer",
+          "description": "教练数"
+        },
+        "coaches": {
+          "type": "array",
+          "description": "教练集合",
+          "items": {
+            "$ref": "#/definitions/Coach"
+          }
+        },
+        "createTime": {
+          "type": "integer",
+          "description": ""
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "启用状态，{0:启用，1:未启用}"
+        }
+      }
+    },
+    "Space": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "_venueId": {
+          "$ref": "#/definitions/Venue"
+        },
+        "name": {
+          "type": "string",
+          "description": "场地名称"
+        },
+        "price": {
+          "type": "number",
+          "description": "工作日价格"
+        },
+        "weekPrice": {
+          "type": "number",
+          "description": "节假日价格"
+        },
+        "manCount": {
+          "type": "string",
+          "description": "服务总人数"
+        },
+        "priceTotal": {
+          "type": "number",
+          "description": "总金额"
+        },
+        "deleteFlg": {
+          "type": "string",
+          "description": "启用状态，{0:启用，1:未启用}"
+        }
+      }
+    },
+    "Coach": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "_clubId": {
+          "$ref": "#/definitions/Club"
+        },
+        "name": {
+          "type": "string",
+          "description": "姓名"
+        },
+        "sex": {
+          "type": "integer",
+          "description": "性别：{0:男，1:女}"
+        },
+        "level": {
+          "type": "string",
+          "description": "职业等级 国家一级/二级/三级运动员"
+        },
+        "age": {
+          "type": "integer",
+          "description": "教齡"
+        },
+        "imgUrl": {
+          "type": "string",
+          "description": "相片"
+        },
+        "introduce": {
+          "type": "string",
+          "description": "介绍"
+        },
+        "comments": {
+          "type": "array",
+          "description": "评论",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "price": {
+          "type": "number",
+          "description": "工作日价格"
+        },
+        "spacePriceFlg": {
+          "type": "integer",
+          "description": "是否包含场地费 {0:不包含，1:包含}"
+        },
+        "manCount": {
+          "type": "string",
+          "description": "服务总人数"
+        },
+        "priceTotal": {
+          "type": "number",
+          "description": "总金额"
+        },
+        "professAvg": {
+          "type": "number",
+          "description": "专业平均评分 3.5"
+        },
+        "communicationAvg": {
+          "type": "number",
+          "description": "沟通平均评分"
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "启用状态，{0:启用，1:未启用}"
+        }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "_userId": {
+          "$ref": "#/definitions/User"
+        },
+        "env": {
+          "type": "integer",
+          "description": "【场馆】环境评分:1-5"
+        },
+        "serve": {
+          "type": "integer",
+          "description": "【场馆】服务评分:1-5"
+        },
+        "profess": {
+          "type": "integer",
+          "description": "【教练】专业评分:1-5"
+        },
+        "communication": {
+          "type": "integer",
+          "description": "【教练】沟通能力:1-5"
+        },
+        "comm": {
+          "type": "string",
+          "description": "评论"
+        },
+        "time": {
+          "type": "number",
+          "description": "评论时间"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "province": {
+          "type": "string",
+          "description": "省"
+        },
+        "city": {
+          "type": "string",
+          "description": "市"
+        },
+        "area": {
+          "type": "string",
+          "description": "区"
+        },
+        "street": {
+          "type": "string",
+          "description": "街道"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "description": "order._id"
+        },
+        "_userId": {
+          "$ref": "#/definitions/User"
+        },
+        "type": {
+          "description": "订单类型 1:场馆，2：俱乐部，3：商城",
+          "type": "integer"
+        },
+        "_venueId": {
+          "description": "venue._id",
+          "type": "integer"
+        },
+        "_clubId": {
+          "description": "club._id",
+          "type": "integer"
+        },
+        "_actId": {
+          "description": "Activity._id",
+          "type": "integer"
+        },
+        "date": {
+          "description": "预定日期,格式：2015-09-24",
+          "type": "string"
+        },
+        "price": {
+          "description": "订单金额",
+          "type": "number"
+        },
+        "orderTimes": {
+          "description": "预定时间，场馆格式:[{_id:space._id,name:space.name,times:['09:00','10:00','13:00']}]，俱乐部格式：,场馆格式:[{_id:club._id,name:club.name,times:['09:00','10:00','13:00']}]",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "beginTime": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "times": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "products": {
+          "description": "订单产品格式:[{_id:product._id,propId:comProps._id,num:数量}]",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        },
+        "payment": {
+          "description": "付款方式 1:微信网页支付,2:支付宝,3:微信移动支付",
+          "type": "integer"
+        },
+        "sportBeans": {
+          "description": "运动豆",
+          "type": "integer"
+        },
+        "freight": {
+          "description": "运费：0-免费",
+          "type": "integer"
+        },
+        "status": {
+          "type": "array",
+          "description": "状态",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "integer",
+                "description": "状态 0:未付款，1:已支付,2:商家确认接单/已发货，3：交易成功，4:用户取消订单,5:商家取消订单/拒绝订单，6：超时自动关闭（未付款24小时），7:退款中,8：已退款，9：确认收货，10：申述"
+              },
+              "time": {
+                "type": "integer",
+                "description": "时间戳"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "address": {
+          "$ref": "#/definitions/SAddress"
+        },
+        "logistics": {
+          "$ref": "#/definitions/Logistics"
+        },
+        "createTime": {
+          "type": "integer",
+          "description": "创建时间"
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "删除flg，1：已删除，0：可用"
+        },
+        "_hasComm": {
+          "type": "integer",
+          "description": "是否已评论，1：已评论，0：未评论"
+        }
+      }
+    },
+    "Arrange": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "description": "arrange._id"
+        },
+        "_userId": {
+          "$ref": "#/definitions/User"
+        },
+        "title": {
+          "description": "描述",
+          "type": "string"
+        },
+        "num": {
+          "description": "人数",
+          "type": "integer"
+        },
+        "money": {
+          "description": "人均价格",
+          "type": "number"
+        },
+        "_orderId": {
+          "$ref": "#/definitions/Order"
+        },
+        "arrTime": {
+          "description": "预约时间",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "场地名或教练名"
+            },
+            "date": {
+              "type": "string",
+              "description": "日期：2015-10-15"
+            },
+            "time": {
+              "type": "string",
+              "description": "时间：20:38"
+            }
+          }
+        },
+        "arrName": {
+          "description": "场馆或俱乐部名",
+          "type": "string"
+        },
+        "arrUser": {
+          "type": "array",
+          "description": "报名者:[{_id:1,time:149928398592}]",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "$ref": "#/definitions/User"
+              },
+              "time": {
+                "type": "integer",
+                "description": "报名时间戳"
+              }
+            }
+          }
+        },
+        "address": {
+          "description": "场馆地址，省/市/区/街道",
+          "type": "object",
+          "properties": {
+            "province": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "area": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            }
+          }
+        },
+        "createTime": {
+          "type": "integer",
+          "description": "创建时间"
+        },
+        "status": {
+          "type": "integer",
+          "description": "状态：0：取消约战,1：报名中，2：已结束"
+        },
+        "isMaster": {
+          "description": "1:发起，0:报名",
+          "type": "integer"
+        },
+        "count": {
+          "description": "已报名人数",
+          "type": "integer"
+        },
+        "op": {
+          "type": "integer",
+          "description": "详情页按钮状态-0：隐藏，1：取消约战，按钮禁用，2：已结束，按钮禁用，3：报名，4：取消报名,5:人数已满且按钮禁用，6：显示“取消约战”"
+        },
+        "overPlus": {
+          "description": "剩余名额",
+          "type": "integer"
+        },
+        "overDays": {
+          "description": "剩余天数",
+          "type": "integer"
+        }
+      }
+    },
+    "Banner": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "title"
+        },
+        "imgUrl": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string",
+          "description": "type=1，新闻ID；type=2，html代码；type=4，url；type其他，不需要传值"
+        },
+        "type": {
+          "type": "integer",
+          "description": "类型，1:跳转后端指定的新闻操作页，2：html网页，3：无跳转，4：打开一个指定的URL"
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "状态：0：启用,1:停用"
+        },
+        "sort": {
+          "type": "integer",
+          "description": "排序字段，值越大排名越前"
+        },
+        "modifyTime": {
+          "type": "string",
+          "description": "编辑时间戳"
+        }
+      }
+    },
+    "Onepage": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "title"
+        },
+        "content": {
+          "type": "string",
+          "description": "html代码"
+        },
+        "type": {
+          "type": "integer",
+          "description": "类型，1:关于xxx，2：加入我们，3：注册协议，4：隐私说明，5：常见问题"
+        },
+        "modifyTime": {
+          "type": "string",
+          "description": "编辑时间戳"
+        }
+      }
+    },
+    "Msg": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "description": "类型，1:短信，2：消息推送，3：站内消息"
+        },
+        "to": {
+          "type": "integer",
+          "description": "对象，1：用户,2：场馆方,3:俱乐部"
+        },
+        "content": {
+          "type": "string",
+          "description": "内容"
+        },
+        "status": {
+          "type": "integer",
+          "description": "消息读取状态：1-已读,0-未读"
+        },
+        "createTime": {
+          "type": "integer",
+          "description": "创建时间戳"
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name"
+      ],
+      "properties": {
+        "_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "description": "名称"
+        },
+        "no": {
+          "type": "string",
+          "description": "编号"
+        },
+        "brand": {
+          "type": "string",
+          "description": "品牌"
+        },
+        "price": {
+          "type": "number"
+        },
+        "imgUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mulitiProps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "prop {prop:'颜色',values:['红色','绿色']}",
+            "properties": {
+              "prop": {
+                "type": "string"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "combProps": {
+          "type": "array",
+          "description": "组合属性库存",
+          "items": {
+            "type": "object",
+            "description": "prop {prop:颜色,value:红色}",
+            "properties": {
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "description": "prop {prop:颜色,value:红色}",
+                  "properties": {
+                    "prop": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "inventory": {
+                "type": "integer",
+                "description": "库存量"
+              },
+              "status": {
+                "type": "integer",
+                "description": "状态（1：上架，0-下架）"
+              }
+            }
+          }
+        },
+        "createTime": {
+          "type": "integer",
+          "description": ""
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "启用状态，{0:启用，1:未启用}"
+        },
+        "comments": {
+          "type": "array",
+          "description": "评价",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_userId": {
+                "type": "integer",
+                "description": "评价人 _id"
+              },
+              "comm": {
+                "type": "string",
+                "description": "评论"
+              },
+              "time": {
+                "type": "integer",
+                "description": "时间戳"
+              }
+            }
+          }
+        },
+        "inventory": {
+          "type": "integer",
+          "description": "总库存"
+        },
+        "_inActivity": {
+          "type": "integer",
+          "description": "产品是否已被添加到进行中的活动中，{1：添加，0：未添加}"
+        }
+      }
+    },
+    "Activity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "名称"
+        },
+        "beginDate": {
+          "type": "string",
+          "description": "开始日期：2015-10-17"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "结束日期：2015-10-27"
+        },
+        "rebate": {
+          "type": "number",
+          "description": "折扣：8.5"
+        },
+        "imgUrl": {
+          "type": "string",
+          "description": "图片"
+        },
+        "products": {
+          "type": "array",
+          "description": "活动产品Ids",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "basePrice": {
+          "type": "number",
+          "description": "产品最低价"
+        },
+        "createTime": {
+          "type": "integer",
+          "description": ""
+        },
+        "count": {
+          "type": "integer",
+          "description": "参与人数"
+        },
+        "_status": {
+          "type": "integer",
+          "description": "进行状态-0:未开始,1:进行中,2:已结束"
+        },
+        "_duration": {
+          "type": "integer",
+          "description": "距离结束相隔秒钟表示数，如：50秒"
+        }
+      }
+    },
+    "SAddress": {
+      "type": "object",
+      "properties": {
+        "_userId": {
+          "$ref": "#/definitions/User"
+        },
+        "name": {
+          "type": "string",
+          "description": "姓名"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "手机号"
+        },
+        "address": {
+          "type": "string",
+          "description": "详细地址"
+        },
+        "deliveryTime": {
+          "type": "integer",
+          "description": "送货时间 {1:节假日,2:工作日,3:不限}"
+        },
+        "createTime": {
+          "type": "integer",
+          "description": "创建时间"
+        }
+      }
+    },
+    "Logistics": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name",
+        "time"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "单号"
+        },
+        "name": {
+          "type": "string",
+          "description": "公司"
+        },
+        "time": {
+          "type": "number",
+          "description": "发货时间"
+        }
+      }
+    },
+    "Page": {
+      "type": "object",
+      "properties": {
+        "pageCount": {
+          "type": "integer",
+          "description": "总页数"
+        },
+        "itemCount": {
+          "type": "integer",
+          "description": "总数据条数"
+        }
+      }
+    },
+    "SportBeans": {
+      "type": "object",
+      "properties": {
+        "_userId": {
+          "$ref": "#/definitions/User"
+        },
+        "payment": {
+          "description": "付款方式 2:支付宝,3:微信移动支付",
+          "type": "integer"
+        },
+        "price": {
+          "description": "订单金额",
+          "type": "number"
+        },
+        "beans": {
+          "description": "运动豆数",
+          "type": "number"
+        },
+        "status": {
+          "type": "array",
+          "description": "状态",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "integer",
+                "description": "状态 0:未付款，1:已支付,2:抵用,3:退回,4:活动领取"
+              },
+              "time": {
+                "type": "integer",
+                "description": "时间戳"
+              }
+            }
+          }
+        },
+        "_orderId": {
+          "$ref": "#/definitions/Order"
+        },
+        "msg": {
+          "description": "交易详情-消息",
+          "type": "string"
+        },
+        "time": {
+          "description": "时间戳",
+          "type": "number"
+        }
+      }
+    },
+    "PostOrder": {
+      "type": "object",
+      "required": [
+        "date",
+        "type",
+        "price",
+        "orderTimes"
+      ],
+      "properties": {
+        "type": {
+          "description": "订单类型 1:场馆，2：俱乐部",
+          "type": "integer",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "_venueId": {
+          "description": "venue._id，_venueId和_clubId 2传1",
+          "type": "integer"
+        },
+        "_clubId": {
+          "description": "club._id，_venueId和_clubId 2传1",
+          "type": "integer"
+        },
+        "date": {
+          "description": "预定日期,格式：2015-09-24",
+          "type": "string"
+        },
+        "price": {
+          "description": "订单金额",
+          "type": "number"
+        },
+        "orderTimes": {
+          "description": "预定时间，场馆格式:[{_id:space._id,name:space.name,times:['09:00','10:00','13:00']}]，俱乐部格式：[{_id:coach._id,name:coach.name,times:['09:00','10:00','13:00']}]",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "times": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostProduct": {
+      "type": "object",
+      "required": [
+        "name",
+        "no",
+        "brand",
+        "price",
+        "mulitiProps",
+        "combProps"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "名称"
+        },
+        "no": {
+          "type": "string",
+          "description": "编号"
+        },
+        "brand": {
+          "type": "string",
+          "description": "品牌"
+        },
+        "price": {
+          "type": "number"
+        },
+        "mulitiProps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "prop {prop:'颜色',values:['红色','绿色']}",
+            "properties": {
+              "prop": {
+                "type": "string"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "combProps": {
+          "type": "array",
+          "description": "组合属性库存",
+          "items": {
+            "type": "object",
+            "description": "prop {prop:颜色,value:红色}",
+            "properties": {
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "description": "prop {prop:颜色,value:红色}",
+                  "properties": {
+                    "prop": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "inventory": {
+                "type": "integer",
+                "description": "库存量"
+              },
+              "status": {
+                "type": "integer",
+                "description": "状态（1：上架，0-下架）"
+              }
+            }
+          }
+        },
+        "file0": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "desc": {
+          "type": "string",
+          "description": "描述"
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "启用状态，{0:启用，1:未启用}"
+        },
+        "file1": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file2": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file3": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file4": {
+          "description": "上传图片：file0",
+          "type": "file"
+        }
+      }
+    },
+    "PutProduct": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "no",
+        "brand",
+        "price",
+        "mulitiProps",
+        "combProps",
+        "deleteFlg"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "description": "名称"
+        },
+        "no": {
+          "type": "string",
+          "description": "编号"
+        },
+        "brand": {
+          "type": "string",
+          "description": "品牌"
+        },
+        "price": {
+          "type": "number"
+        },
+        "mulitiProps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "prop {prop:'颜色',values:['红色','绿色']}",
+            "properties": {
+              "prop": {
+                "type": "string"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "combProps": {
+          "type": "array",
+          "description": "组合属性库存",
+          "items": {
+            "type": "object",
+            "description": "prop {prop:颜色,value:红色}",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "required": false
+              },
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "description": "prop {prop:颜色,value:红色}",
+                  "properties": {
+                    "prop": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "inventory": {
+                "type": "integer",
+                "description": "库存量"
+              },
+              "status": {
+                "type": "integer",
+                "description": "状态（1：上架，0-下架）"
+              }
+            }
+          }
+        },
+        "desc": {
+          "type": "string",
+          "description": "描述"
+        },
+        "deleteFlg": {
+          "type": "integer",
+          "description": "启用状态，{0:启用，1:未启用}"
+        },
+        "file0": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file1": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file2": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file3": {
+          "description": "上传图片：file0",
+          "type": "file"
+        },
+        "file4": {
+          "description": "上传图片：file0",
+          "type": "file"
+        }
+      }
+    },
+    "PostProductIds": {
+      "type": "object",
+      "required": [
+        "productIds"
+      ],
+      "properties": {
+        "productIds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "integer",
+                "description": "product._id"
+              },
+              "propId": {
+                "type": "string",
+                "description": "产品组合属性ID"
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostPreOrder": {
+      "type": "object",
+      "required": [
+        "_actId",
+        "products",
+        "payment",
+        "price",
+        "freight",
+        "_addrId"
+      ],
+      "properties": {
+        "_actId": {
+          "description": "activity._id",
+          "type": "integer"
+        },
+        "products": {
+          "description": "订单产品格式:[{_id:product._id,propId:comProps._id,num:数量}]",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "integer",
+                "description": "product._id"
+              },
+              "propId": {
+                "type": "string",
+                "description": "产品组合属性ID"
+              },
+              "num": {
+                "type": "integer",
+                "description": "数量"
+              }
+            }
+          }
+        },
+        "payment": {
+          "description": "付款方式 2:支付宝,3:微信移动支付",
+          "type": "integer",
+          "enum": [
+            2,
+            3
+          ]
+        },
+        "price": {
+          "description": "订单金额",
+          "type": "number"
+        },
+        "sportBeans": {
+          "description": "运动豆",
+          "type": "integer"
+        },
+        "freight": {
+          "description": "运费，免费：0",
+          "type": "number"
+        },
+        "_addrId": {
+          "description": "address._id",
+          "type": "integer"
+        }
+      }
+    },
+    "PostComment": {
+      "type": "object",
+      "required": [
+        "orderId",
+        "prodComms"
+      ],
+      "properties": {
+        "orderId": {
+          "description": "order._id",
+          "type": "integer"
+        },
+        "prodComms": {
+          "description": "产品评论格式:[{productId:1,comm:'产品质量不好'}]",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": {
+                "type": "integer",
+                "description": "product._id"
+              },
+              "comm": {
+                "type": "string",
+                "description": "评论"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>俱乐部详情</title>
+</head>
+
+<body>
+<div class="sub_head"><a href="#coachList/{{clubId}}" class="fl"><img src="images/icon6.png" /></a><span>俱乐部详情</span><a href="tel:{{clubDetail.mobile}}" class="fr"><img src="images/tel.png" /></a></div>
+<div class="tab_cont">
+  <div id="scroll_img" class="dd_banner">
+    <ul>
+          <li ng-repeat="curImgUrl in imgUrls" on-finish-render-filters ><img src="{{imgServerPath+curImgUrl}}" /></li>
+    </ul>
+  </div>
+  <div id="scroll_position" class="tab_block">
+    <ul>
+          <li class="on">1</li>
+          <li ng-repeat="curImgUrl in imgUrlsScrollLength">{{$index+1}}</li>
+    </ul>
+  </div>
+</div>
+<div class="dy_list">
+<div class="pay"><p>
+      <p><em><img ng-show="clubDetail.scheduleFlg==1" src="images/dd_ico_05.png" /><img  ng-show="clubDetail.scheduleFlg!=1" src="images/cw_ico.png" /></em>在线预订</p>
+      <p><em><img ng-show="clubDetail.refundFlg==1" src="images/dd_ico_05.png" /><img  ng-show="clubDetail.refundFlg!=1" src="images/cw_ico.png" /></em>在线退款</p>
+</p></div>
+    <dl>
+      <dd><span class="jlb_title">俱乐部标签</span>
+        <ul><li ng-repeat="flag in clubDetail.flags">{{flag}}</li></ul>
+      </dd>
+    </dl>
+</div>
+<div class="Routine"><h3><span>常规信息</span></h3>
+<table width="94%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="35%" align="left" valign="top">俱乐部地址</td>
+    <td>{{clubDetail.address.city+clubDetail.address.area+clubDetail.address.street}}</td>
+  </tr>
+  <tr>
+    <td width="35%" align="left" valign="top">工作日营业时间</td>
+    <td>{{clubDetail.beginTime}}-{{clubDetail.endTime}}</td>
+  </tr>
+  <tr>
+    <td width="35%" align="left" valign="top">节假日营业时间</td>
+    <td>{{clubDetail.weekBeginTime}}-{{clubDetail.weekEndTime}}</td>
+  </tr>
+  <tr>
+    <td width="35%" align="left" valign="top">联系电话</td>
+    <td>{{clubDetail.mobile}}</td>
+  </tr>
+  <tr>
+    <td width="35%" align="left" valign="top">交通路线</td>
+    <td>{{clubDetail.trafficRoute  }}</td>
+  </tr>
+  <tr>
+    <td width="35%" align="left" valign="top">俱乐部介绍</td>
+    <td>{{clubDetail.introduce }}</td>
+  </tr>
+</table>
+
+</div>
+</body>
+</html>

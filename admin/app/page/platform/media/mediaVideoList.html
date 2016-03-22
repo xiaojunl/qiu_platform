@@ -1,0 +1,108 @@
+<div id="loading" class="loading" ng-show="showLoading">Loading pages...</div>
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        新媒体信息发布
+        <small>维护视频信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#newstypeList">新媒体信息发布</a></li>
+        <li class="active">视频管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">视频信息列表</h3>
+            <div class="box-tools">
+                <div class="pull-right">
+                    <a href="#saveMediaVideo/-1" class="btn btn-default btn-sm"  data-toggle="modal">
+                        <i class="fa fa-plus-circle"></i> 新增
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-search">
+                <tr>
+                    <td class="left">发布日期从</td>
+                    <td>
+                        <input type="text" ng-model="search.beginTime" class="form-control dpicker" />
+                    </td>
+                    <td class="left">至</td>
+                    <td>
+                        <input type="text" ng-model="search.endTime" class="form-control dpicker" />
+                    </td>
+                    <td class="left">时间段</td>
+                    <td>
+                        <select class="form-control" ng-model="timeFlg" ng-options="x.id as x.name for x in timeOptions"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left">分类</td>
+                    <td>
+                        <select class="form-control" ng-model="typeId" ng-options="x.id as x.name for x in typeOptions"/>
+                    </td>
+                    <td class="left">视频名称</td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="searchField"/>
+                    </td>
+                    <td class="left"></td>
+                    <td class="left">
+                        <button class="btn btn-primary btn-sm" ng-click="reload()">查询</button>
+                    </td>
+                    <td class="left"></td>
+                    <td class="left">
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>视频名称</th>
+                    <th>类型</th>
+                    <th>分类名称</th>
+                    <th>推荐至首页</th>
+                    <th>栏目置顶</th>
+                    <th>状态</th>
+                    <th>评论/点赞/分享</th>
+                    <th>时长</th>
+                    <th>浏览人次</th>
+                    <th>发布时间</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="public in datas">
+                    <td>{{public.title}}</td>
+                    <td>{{public.type|videoTypeTag}}</td>
+                    <td>{{public.typeName}}</td>
+                    <td>{{public.isFirst|renderIsFlag}}</td>
+                    <td>{{public.isTop|renderIsFlag}}</td>
+                    <td>{{public.enableStatus|renderFlag}}</td>
+                    <td>{{public.commentsCount}}/{{public.likesCount}}/{{public.sharesCount}}</td>
+                    <td>{{public.minutes}}</td>
+                    <td>{{public.browseCount}}</td>
+                    <td>{{public.createTime}}</td>
+                    <td>
+                        <a href="#saveMediaVideo/{{public.id}}" id="updateBtn" title="编辑"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:;" title="删除" data-toggle="modal" ng-click="deleteMediaVideo($index)"><i class="fa fa-remove"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <p class="pull-left">
+                共<span>{{itemCount}}</span>条记录，
+                当前是第<span>{{currentPage}}/{{pageCount}}</span>页
+            </p>
+            <ul id="pagination"></ul>
+        </div>
+    </div>
+
+
+
+</section>
